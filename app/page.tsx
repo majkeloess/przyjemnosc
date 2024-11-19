@@ -1,10 +1,11 @@
 import MainArrow from "@/components/ui/MainArrow";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
       <header>
-        <h1 className="text-[13vw] leading-[24vh] font-bold text-bronzelog">
+        <h1 className="text-[13.5vw] leading-[24vh] font-manrope font-semibold text-bronzelog">
           PRZYJEMNOSC
         </h1>
       </header>
@@ -20,17 +21,37 @@ export default function Home() {
           <li>012 777 321 777</li>
         </ul>
       </nav>
-      <section className="flex flex-row justify-between">
-        <div>
-          <h2 className="uppercase"> </h2>
+      <section className="flex flex-row justify-between mt-16">
+        <div className=" w-5/12">
+          <h2 className="w-[70%] uppercase text-3xl leading-[30px] font-medium text-fontcolor mx-4">
+            Zasmakuj wyjątkowości w każdym detalu. Przyjdź i poczuj magię
+            miejsca, gdzie tradycja splata się z pasją, a atmosfera zaprasza do
+            relaksu i radości ze wspólnych chwil.{" "}
+          </h2>
         </div>
-        <div>
-          <h3></h3>
+        <div className="w-5/12">
+          <h3 className="w-[70%]">
+            Inspirując się bogatym dziedzictwem polskiej kuchni, kreujemy dania,
+            które podbiją serca zarówno miłośników klasyki, jak i poszukiwaczy
+            kulinarnych uniesień. Od delikatnych pierogów, przez aromatyczny
+            żurek, aż po soczyste mięsa pieczone na tradycyjnych recepturach —
+            każde danie to opowieść o polskiej gościnności i kulinarnym
+            kunszcie.
+          </h3>
         </div>
         <div>
           {/* <p className="rotate-90">Nasze menu</p> */}
           <MainArrow />
         </div>
+      </section>
+      <section className="w-full flex justify-center">
+        <Image
+          src="/m.png"
+          alt="main-photo"
+          className="w-full mx-4"
+          width={1200}
+          height={400}
+        />
       </section>
     </div>
   );

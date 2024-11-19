@@ -4,9 +4,9 @@ function MainArrow() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 50 600"
+      viewBox="0 0 50 300"
       width="50"
-      height="600"
+      height="300"
     >
       <line
         x1="25"

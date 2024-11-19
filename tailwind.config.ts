@@ -9,8 +9,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-manrope)", "sans-serif"],
-        manrope: ["var(--font-manrope)", "sans-serif"],
+        sans: ["Manrope", "sans"],
       },
       colors: {
         bronzelog: "#7f3828",
@@ -20,5 +19,42 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase }) {
+      addBase({
+        "@font-face": [
+          {
+            fontFamily: "Manrope",
+            fontWeight: "400",
+            fontStyle: "normal",
+            src: 'url("/fonts/Manrope-Regular.ttf") format("truetype")',
+          },
+          {
+            fontFamily: "Manrope",
+            fontWeight: "500",
+            fontStyle: "normal",
+            src: 'url("/fonts/Manrope-Medium.ttf") format("truetype")',
+          },
+          {
+            fontFamily: "Manrope",
+            fontWeight: "700",
+            fontStyle: "normal",
+            src: 'url("/fonts/Manrope-Bold.ttf") format("truetype")',
+          },
+          {
+            fontFamily: "Manrope",
+            fontWeight: "300",
+            fontStyle: "normal",
+            src: 'url("/fonts/Manrope-Light.ttf") format("truetype")',
+          },
+          {
+            fontFamily: "Manrope",
+            fontWeight: "800",
+            fontStyle: "normal",
+            src: 'url("/fonts/Manrope-ExtraBold.ttf") format("truetype")',
+          },
+        ],
+      });
+    },
+  ],
 } satisfies Config;
