@@ -8,9 +8,15 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-manrope)", "sans-serif"],
+        manrope: ["var(--font-manrope)", "sans-serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        bronzelog: "#7f3828",
+        back: "#edede4",
+        fontcolor: "#241a16",
+        graycolor: "#b9ada5",
       },
     },
   },
