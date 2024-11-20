@@ -1,9 +1,13 @@
 import React from "react";
 
-function Header() {
+function Header({ isMain }: { isMain: boolean }) {
   return (
     <header>
-      <h1 className="text-[13vw] leading-[24vh] font-bold text-bronzelog">
+      <h1
+        className={`text-[13.5vw] leading-[24vh] font-bold ${
+          isMain ? "text-bronzelog" : "text-back"
+        }`}
+      >
         PRZYJEMNOSC
       </h1>
     </header>

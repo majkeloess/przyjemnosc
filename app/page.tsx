@@ -1,3 +1,6 @@
+import Kontakt from "@/components/subpages/Kontakt";
+import Menu from "@/components/subpages/Menu";
+import Onas from "@/components/subpages/Onas";
 import MainArrow from "@/components/ui/MainArrow";
 import Image from "next/image";
 
@@ -19,19 +22,21 @@ export default function Home() {
           </h3>
         </div>
         <div>
-          {/* <p className="rotate-90">Nasze menu</p> */}
           <MainArrow />
         </div>
       </section>
-      <section className="w-full flex justify-center">
+      <section className="w-full">
         <Image
           src="/m.png"
           alt="main-photo"
-          className="w-full mx-4"
-          width={1200}
-          height={400}
+          className="w-full"
+          width={2382}
+          height={773}
         />
       </section>
+      <Menu />
+      <Onas />
+      <Kontakt />
     </div>
   );
 }

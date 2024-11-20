@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/ui/Header";
 import NavMain from "@/components/main-page/NavMain";
 import Link from "next/link";
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "Przyjemność",
@@ -18,10 +19,11 @@ export default function RootLayout({
     <html lang="pl">
       <body>
         <Link href="/">
-          <Header />
+          <Header isMain={true} />
         </Link>
         <NavMain />
         {children}
+        <Footer />
       </body>
     </html>
   );

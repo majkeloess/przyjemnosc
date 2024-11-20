@@ -5,16 +5,16 @@ function NavMain() {
   return (
     <nav className="flex flex-row justify-between mx-4 ">
       <ul className="flex flex-row gap-10 text-fontcolor">
-        <Link href="/menu">
+        <Link href="#menu">
           <li>Menu</li>
         </Link>
         <Link href="/rezerwacje">
           <li>Rezerwacje</li>
         </Link>
-        <Link href="/onas">
+        <Link href="#onas">
           <li>O nas</li>
         </Link>
-        <Link href="/kontakt">
+        <Link href="#kontakt">
           <li>Kontakt</li>
         </Link>
       </ul>
