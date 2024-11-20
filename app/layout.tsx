@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/ui/Header";
+import NavMain from "@/components/main-page/NavMain";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Przyjemność",
@@ -13,7 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        <Link href="/">
+          <Header />
+        </Link>
+        <NavMain />
+        {children}
+      </body>
     </html>
   );
 }
