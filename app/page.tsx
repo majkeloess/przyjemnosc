@@ -6,10 +6,14 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
-      <section className="flex flex-row justify-between">
-        <div>
-          <h2 className="uppercase"> </h2>
+    <div className="mt-12">
+      <section className="flex flex-row justify-between ml-4">
+        <div className="w-5/12">
+          <h2 className="uppercase w-[70%] text-2xl font-medium">
+            Zasmakuj wyjątkowoścci w każdym detalu. Przyjdź i poczuj magię
+            miejsca gdzie tradycja splata się z paską, a atmosfera zaprasza do
+            relaksu i radości ze wspólnych chwil.
+          </h2>
         </div>
         <div className="w-5/12">
           <h3 className="w-[70%]">
