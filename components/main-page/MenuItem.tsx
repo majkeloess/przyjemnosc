@@ -1,5 +1,6 @@
 import React from "react";
 import RightArrow from "../ui/RightArrow";
+import DiagonalArrow from "../ui/DiagonalArrow";
 
 function MenuItem({ name, current }: { name: string; current: string }) {
   return (
@@ -7,7 +8,9 @@ function MenuItem({ name, current }: { name: string; current: string }) {
       {current != name ? (
         <div className="w-full h-[10dvh] border-graycolor border-b-[1px] flex justify-center items-center">
           <h3 className="text-2xl uppercase font-medium">{name}</h3>
-          <div></div>
+          <div className="absolute right-10">
+            <DiagonalArrow />
+          </div>
         </div>
       ) : (
         <div className="w-full bg-bronzelog flex flex-row items-center">
@@ -23,7 +26,7 @@ function MenuItem({ name, current }: { name: string; current: string }) {
               <p className="text-md">46 PLN</p>
             </div>
           </div>
-          <div className="w-1/12 ">
+          <div className="absolute right-10">
             <RightArrow />
           </div>
         </div>

@@ -3,9 +3,9 @@ import React from "react";
 function DiagonalArrow() {
   return (
     <svg
-      fill="#7f3828"
-      height="200px"
-      width="200px"
+      fill="#241a16"
+    height="30px"
+      width="30px"
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

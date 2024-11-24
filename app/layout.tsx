@@ -21,7 +21,6 @@ export default function RootLayout({
         <Link href="/">
           <Header isMain={true} />
         </Link>
-        <NavMain />
         {children}
         <Footer />
       </body>
