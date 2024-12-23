@@ -16,29 +16,39 @@ function Onas() {
           ale także podróż przez historię i kulturę naszego kraju.
         </h2>
       </div>
-      <div className="grid grid-cols-2 grid-rows-3 mt-12 gap-6">
-        <div className="row-span-3 col-span-1 relative">
+      <div className="flex flex-row gap-6 mt-12">
+        <div className="w-1/2">
           <Image
             src="/schabowy.jpg"
             alt="schabowy"
-            layout="fill"
-            objectFit="cover"
+            width={500}
+            height={500}
+            className="w-full"
           />
         </div>
-        <div className="row-span-1 col-span-1">
-          <p className="text-fontcolor">
-            Naszym celem jest przybliżenie Ci prawdziwego smaku Polski -
-            tradycyjnych receptur wzbogaconych odrobiną nowoczesności.
-            Niezależnie od tego, czy chcesz zasmakować w domowym obiedzie, czy
-            nasze interpretacje znanych klasyków.
-          </p>
-          <div className="my-6">
-            <Button text="Zarezerwuj stolik!" link="/rezerwacje" />
+        <div className="w-1/2 flex flex-col justify-between">
+          <div>
+            <p className="text-fontcolor">
+              Naszym celem jest przybliżenie Ci prawdziwego smaku Polski -
+              tradycyjnych receptur wzbogaconych odrobiną nowoczesności.
+              Niezależnie od tego, czy chcesz zasmakować w domowym obiedzie, czy
+              nasze interpretacje znanych klasyków.
+            </p>
+            <div className="my-6">
+              <Button text="Zarezerwuj stolik!" link="/rezerwacje" />
+            </div>
           </div>
-        </div>
-        <div className="row-span-2 col-span-1 flex flex-row justify-center gap-6">
-          <Image src="/pierogi.png" alt="pierogi" width={400} height={200} />
-          <Image src="/kurczak.png" alt="kurczak" width={300} height={200} />
+          <div>
+            <div className="w-full">
+              <Image
+                src="/kazimierz.jpg"
+                alt="kazimierz"
+                width={500}
+                height={400}
+                className="w-full"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

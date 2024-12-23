@@ -1,10 +1,10 @@
 export type MenuType =
-  | "Przystawki"
-  | "Sałatki"
-  | "Zupy"
-  | "Mięsa"
-  | "Ryby"
-  | "Regionalne"
-  | "Dodatki"
-  | "Napoje"
+  | "przystawki"
+  | "salatki"
+  | "zupy"
+  | "miesa"
+  | "ryby"
+  | "regionalne"
+  | "dodatki"
+  | "napoje"
   | "";
