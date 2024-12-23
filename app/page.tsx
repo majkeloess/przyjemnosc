@@ -4,8 +4,10 @@ import Menu from "@/components/subpages/Menu";
 import Onas from "@/components/subpages/Onas";
 import MainArrow from "@/components/ui/MainArrow";
 import Image from "next/image";
+import { getMenuItems } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const menuItems = await getMenuItems();
   return (
     <>
       <NavMain />
@@ -39,9 +41,10 @@ export default function Home() {
             className="w-full"
             width={2382}
             height={773}
+            priority
           />
         </section>
-        <Menu />
+        <Menu menuItems={menuItems} />
         <Onas />
         <Kontakt />
       </div>

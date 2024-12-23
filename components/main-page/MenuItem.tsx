@@ -1,8 +1,17 @@
 import React from "react";
 import RightArrow from "../ui/RightArrow";
 import DiagonalArrow from "../ui/DiagonalArrow";
+import type { MenuItem } from "@/types/types";
 
-function MenuItem({ name, current }: { name: string; current: string }) {
+function MenuItem({
+  name,
+  current,
+  items,
+}: {
+  name: string;
+  current: string;
+  items: MenuItem[];
+}) {
   return (
     <>
       {current != name ? (
@@ -17,14 +26,16 @@ function MenuItem({ name, current }: { name: string; current: string }) {
           <h3 className="w-6/12 text-[7dvw] font-medium uppercase text-back">
             {name}
           </h3>
-          <div className="w-5/12">
-            {/* ITEMS FROM DB */}
-            <div className="flex flex-row gap-5 items-center text-back">
-              <p className="text-lg">
-                Pierogi ruskie na maśle ze smażoną cebulką
-              </p>
-              <p className="text-md">46 PLN</p>
-            </div>
+          <div className="w-2/12 my-6">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-row justify-between items-center text-back"
+              >
+                <p className="text-lg">{item.name}</p>
+                <p className="text-md whitespace-nowrap">{item.price} PLN</p>
+              </div>
+            ))}
           </div>
           <div className="absolute right-10">
             <RightArrow />
