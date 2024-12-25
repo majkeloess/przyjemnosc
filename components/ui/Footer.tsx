@@ -15,9 +15,15 @@ function Footer() {
         <div>
           <p>przyjemnoscresto@gmail.com</p>
           <p>012 777 321 777</p>
+          <p className="xl:hidden block text-back xl:m-5">
+            Stworzone przez{" "}
+            <Link href="https://majkeloess.dev" target="_blank">
+              @majkeloess, 2024
+            </Link>
+          </p>
         </div>
       </div>
-      <p className="text-back absolute left-0 bottom-0 xl:m-5 m-2">
+      <p className="hidden text-back xl:block absolute left-0 bottom-0 xl:m-5 m-2">
         Stworzone przez{" "}
         <Link href="https://majkeloess.dev" target="_blank">
           @majkeloess, 2024

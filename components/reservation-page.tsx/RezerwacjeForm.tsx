@@ -5,43 +5,33 @@ function RejestracjaForm() {
   return (
     <form className="mt-6" action="">
       <div className="flex flex-col">
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col w-1/2">
-            <label htmlFor="name">imię</label>
-            <input
-              className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
-              type="name"
-              name="name"
-              id="name"
-              required
-            />
-          </div>
-          <div className="flex flex-col w-1/2">
-            <label htmlFor="surname">nazwisko</label>
-            <input
-              className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
-              type="surname"
-              name="surname"
-              id="surname"
-              required
-            />
-          </div>
-        </div>
-        <label className="mt-4" htmlFor="email">
-          e-mail
-        </label>
+        <label htmlFor="name">imię</label>
         <input
-          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
+          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
+          type="name"
+          name="name"
+          id="name"
+          required
+        />
+        <label htmlFor="surname">nazwisko</label>
+        <input
+          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
+          type="surname"
+          name="surname"
+          id="surname"
+          required
+        />
+        <label htmlFor="email">e-mail</label>
+        <input
+          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
           type="email"
           name="email"
           id="email"
           required
         />
-        <label className="mt-4" htmlFor="password">
-          hasło
-        </label>
+        <label htmlFor="password">hasło</label>
         <input
-          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
+          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
           type="password"
           name="password"
           id="password"
@@ -49,7 +39,7 @@ function RejestracjaForm() {
         />
         <label htmlFor="password">powtórz hasło</label>
         <input
-          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
+          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
           type="repeat-password"
           name="repeat-password"
           id="repeat-password"

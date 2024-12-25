@@ -23,10 +23,12 @@ function MenuItem({
         </div>
       ) : (
         <div className="w-full bg-bronzelog flex xl:flex-row flex-col items-center">
-          <h3 className="w-6/12 text-[7dvw] font-medium uppercase text-back">
-            {name}
-          </h3>
-          <div className="xl:w-2/12 w-full my-6">
+          <div className="flex flex-row justify-between">
+            <h3 className="xl:w-6/12 w-full text-[7dvw] font-medium uppercase text-back">
+              {name}
+            </h3>
+          </div>
+          <div className="xl:w-2/12 w-full xl:my-6 my-2">
             {items.map((item) => (
               <div
                 key={item.id}
@@ -39,7 +41,7 @@ function MenuItem({
               </div>
             ))}
           </div>
-          <div className="absolute right-10">
+          <div className="absolute right-10 hidden xl:block">
             <RightArrow />
           </div>
         </div>

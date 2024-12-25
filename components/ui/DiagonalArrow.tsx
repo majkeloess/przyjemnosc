@@ -4,7 +4,7 @@ function DiagonalArrow() {
   return (
     <svg
       fill="#241a16"
-    height="30px"
+      height="30px"
       width="30px"
       version="1.1"
       id="Layer_1"
