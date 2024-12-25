@@ -4,7 +4,7 @@ function Header({ isMain }: { isMain: boolean }) {
   return (
     <header>
       <h1
-        className={`text-[13.5vw] leading-[24vh] font-bold ${
+        className={`text-[13.5vw] leading-12  xl:leading-[24vh] font-bold ${
           isMain ? "text-bronzelog" : "text-back"
         }`}
       >
