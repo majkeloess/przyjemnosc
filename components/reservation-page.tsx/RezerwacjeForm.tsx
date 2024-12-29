@@ -1,24 +1,17 @@
 import React from "react";
 import Button from "@/components/ui/Button";
-import Link from "next/link";
+import { createUser } from "@/lib/mutations";
+
 function RejestracjaForm() {
   return (
-    <form className="mt-6" action="">
+    <form className="mt-6" action={createUser}>
       <div className="flex flex-col">
-        <label htmlFor="name">imię</label>
+        <label htmlFor="username">nazwa użytkownika</label>
         <input
           className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
-          type="name"
-          name="name"
-          id="name"
-          required
-        />
-        <label htmlFor="surname">nazwisko</label>
-        <input
-          className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
-          type="surname"
-          name="surname"
-          id="surname"
+          type="text"
+          name="username"
+          id="username"
           required
         />
         <label htmlFor="email">e-mail</label>
@@ -37,16 +30,18 @@ function RejestracjaForm() {
           id="password"
           required
         />
-        <label htmlFor="password">powtórz hasło</label>
+        <label htmlFor="confirm-password">powtórz hasło</label>
         <input
           className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl w-[70vw] xl:w-[20vw]"
-          type="repeat-password"
-          name="repeat-password"
-          id="repeat-password"
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
           required
         />
+        <input type="hidden" name="type" value="customer" />
         <div className="flex flex-row mt-4 gap-4 items-center">
-          <Button text="Utwórz konto!" />
+          <Button type="submit" text="Utwórz konto!" />
+          <button type="submit">test</button>
         </div>
       </div>
     </form>
