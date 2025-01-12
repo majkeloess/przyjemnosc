@@ -1,73 +1,55 @@
-import { getTableCapacity, getUser } from "@/lib/queries";
+import {
+  getReservations,
+  getTableCapacity,
+  getUser,
+  getUserReservations,
+} from "@/lib/queries";
 import { redirect } from "next/navigation";
 import React from "react";
+import { createReservation } from "@/lib/mutations";
+import RezerwacjaForm from "@/components/reservation-page.tsx/RezerwacjaForm";
 
 export default async function PanelPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   try {
-    const userData = await getUser(params.id);
+    const id = (await params).id;
+    const userData = await getUser(id);
     const capacities = await getTableCapacity();
+    const reservations = await getReservations();
+    const userReservations = await getUserReservations(id);
 
     if (!userData) {
       redirect("/rezerwacje");
     }
 
     return (
-      <div>
-        <div>
+      <div className="flex flex-col gap-4 mx-auto max-w-2xl w-full px-4 h-[80dvh] mt-4">
+        <div className="flex justify-center uppercase text-2xl font-medium">
           <h2>Witaj, {userData.username}</h2>
         </div>
-        <div className="flex flex-col gap-4 xl:flex-row">
-          <section className="xl:w-1/2">
-            <h3>Zarezerwuj stolik</h3>
-            <div>
-              <label htmlFor="capacity">Wybierz liczbę osób</label>
-              <select id="capacity" name="capacity">
-                {capacities.map((capacity) => (
-                  <option key={capacity} value={capacity}>
-                    {capacity}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="date">Wybierz datę</label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                min={new Date().toISOString().split("T")[0]}
-                max={
-                  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-                    .toISOString()
-                    .split("T")[0]
-                }
-              />
-            </div>
-            <div>
-              <label htmlFor="time">Wybierz godzinę</label>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {Array.from({ length: 21 }, (_, i) => {
-                  const hour = Math.floor(i / 2) + 12;
-                  const minutes = i % 2 === 0 ? "00" : "30";
-                  const timeString = `${hour}:${minutes}`;
-                  return (
-                    <button
-                      key={timeString}
-                      type="button"
-                      className="px-3 py-1 border border-bronzelog rounded-lg hover:bg-bronzelog hover:text-white transition-colors"
-                    >
-                      {timeString}
-                    </button>
-                  );
-                })}
-              </div>
+        <div className="flex flex-col gap-4">
+          <RezerwacjaForm userId={id} capacities={capacities} />
+          <section className="flex flex-col gap-4">
+            <h3 className="uppercase text-xl font-medium text-bronzelog">
+              Twoje rezerwacje
+            </h3>
+            <div className="flex flex-col gap-2">
+              {userReservations.length === 0 && (
+                <div className="text-center my-4">
+                  Nie zrobiłeś jeszcze żadnej rezerwacji, zarezerwuj już dziś i
+                  zanurz się w tradycji polskiej kuchni.
+                </div>
+              )}
+              {userReservations.map((reservation) => (
+                <div key={reservation.id}>
+                  {reservation.start_time.toLocaleString()}
+                </div>
+              ))}
             </div>
           </section>
-          <section className="xl:w-1/2">Twoje rezerwacje</section>
         </div>
       </div>
     );

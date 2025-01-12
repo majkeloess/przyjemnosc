@@ -1,7 +1,7 @@
-import { MenuItem, UserSchema } from "@/types/types";
+import { MenuItem, ReservationSchema, UserSchema } from "@/types/types";
 import { MenuItemSchema } from "@/types/types";
 import pool from "./db";
-import type { User } from "@/types/types";
+import type { Reservation, User } from "@/types/types";
 
 export const getUser = async (id: string): Promise<User> => {
   const { rows } = await pool.query(
@@ -34,3 +34,19 @@ export const getTableCapacity = async (): Promise<number[]> => {
     return [];
   }
 };
+
+export const getUserReservations = async (
+  id: string
+): Promise<Reservation[]> => {
+  const { rows } = await pool.query(
+    "SELECT * FROM restaurant.reservations WHERE user_id = $1",
+    [id]
+  );
+  return ReservationSchema.array().parse(rows);
+};
+
+export const getReservations = async (): Promise<Reservation[]> => {
+  const { rows } = await pool.query("SELECT * FROM restaurant.reservations");
+  return ReservationSchema.array().parse(rows);
+};
+  

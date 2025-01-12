@@ -1,7 +1,4 @@
-import RejestracjaForm from "@/components/reservation-page.tsx/RezerwacjeForm";
-import RezerwacjeForm from "@/components/reservation-page.tsx/RezerwacjeForm";
-import Button from "@/components/ui/Button";
-import Link from "next/link";
+import RejestracjaForm from "@/components/reservation-page.tsx/RejestracjaForm";
 import React from "react";
 
 function RejestracjaPage() {

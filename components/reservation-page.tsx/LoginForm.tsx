@@ -21,8 +21,7 @@ function LoginForm() {
       const user = await login(email, password);
       console.log("Login successful, user:", user);
 
-      const path = `/rezerwacje/panel/${user.id}`;
-      window.location.href = path;
+      router.push(`/rezerwacje/panel/${user.id}`);
     } catch (err) {
       console.error("Błąd logowania:", err);
       setError("Nieprawidłowy email lub hasło");

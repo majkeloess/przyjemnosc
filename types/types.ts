@@ -56,7 +56,7 @@ export const ReservationStatusEnum = z.enum(["cancelled", "done", "pending"]);
 
 export const ReservationSchema = z.object({
   id: z.number(),
-  user_id: z.number(),
+  user_id: z.string(),
   table_id: z.number(),
   start_time: z.date(),
   end_time: z.date(),
@@ -76,7 +76,7 @@ export type ReservationTables = z.infer<typeof ReservationTablesSchema>;
 
 export const LoyaltyCodeSchema = z.object({
   id: z.number(),
-  user_id: z.number(),
+  user_id: z.string(),
   code: z.string(),
   discount_percentage: z.number().default(20),
   used: z.boolean().default(false),
