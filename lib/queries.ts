@@ -1,6 +1,15 @@
-import { MenuItem } from "@/types/types";
+import { MenuItem, UserSchema } from "@/types/types";
 import { MenuItemSchema } from "@/types/types";
 import pool from "./db";
+import type { User } from "@/types/types";
+
+export const getUser = async (id: string): Promise<User> => {
+  const { rows } = await pool.query(
+    "SELECT * FROM restaurant.users WHERE id = $1",
+    [id]
+  );
+  return UserSchema.parse(rows[0]);
+};
 
 export const getMenuItems = async (): Promise<MenuItem[]> => {
   try {

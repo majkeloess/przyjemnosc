@@ -40,8 +40,12 @@ function RejestracjaForm() {
         />
         <input type="hidden" name="type" value="customer" />
         <div className="flex flex-row mt-4 gap-4 items-center">
-          <Button type="submit" text="Utwórz konto!" />
-          <button type="submit">test</button>
+          <button
+            className="text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full"
+            type="submit"
+          >
+            Utwórz konto!
+          </button>
         </div>
       </div>
     </form>

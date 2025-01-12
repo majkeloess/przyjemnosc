@@ -13,7 +13,7 @@ export type MenuEnumType =
 export type UserType = "admin" | "customer";
 
 export const UserSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   username: z.string(),
   email: z.string().email(),
   password_hash: z.string(),

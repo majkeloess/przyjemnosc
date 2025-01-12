@@ -5,7 +5,6 @@ function RezerwacjePage() {
   return (
     <section className="h-[60dvh] flex justify-center items-center">
       <LoginForm />
-      
     </section>
   );
 }

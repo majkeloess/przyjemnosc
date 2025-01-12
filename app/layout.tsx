@@ -4,6 +4,7 @@ import Header from "@/components/ui/Header";
 import NavMain from "@/components/main-page/NavMain";
 import Link from "next/link";
 import Footer from "@/components/ui/Footer";
+import { AuthProvider } from "@/lib/hooks/useAuth";
 
 export const metadata: Metadata = {
   title: "Przyjemność",
@@ -21,7 +22,7 @@ export default function RootLayout({
         <Link href="/">
           <Header isMain={true} />
         </Link>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <Footer />
       </body>
     </html>
