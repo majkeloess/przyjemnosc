@@ -22,7 +22,7 @@ function MenuItem({
           </div>
         </div>
       ) : (
-        <div className="w-full bg-bronzelog flex xl:flex-row flex-col items-center">
+        <div className="w-full bg-bronzelog flex xl:flex-row flex-col items-center xl:justify-around">
           <div className="flex flex-row justify-between">
             <h3 className="xl:w-6/12 w-full text-[7dvw] font-medium uppercase text-back">
               {name}
