@@ -47,7 +47,6 @@ CREATE TABLE tables (
 CREATE TABLE reservations (
     id serial PRIMARY KEY,
     user_id integer,
-    table_id integer REFERENCES tables ON DELETE CASCADE,
     start_time timestamp NOT NULL,
     end_time timestamp NOT NULL,
     status reservation_status DEFAULT 'pending',
@@ -78,6 +77,32 @@ CREATE TABLE menuitems (
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     type menu_type NOT NULL
 );
+
+
+-- Funkcja do automatycznej aktualizacji statusu rezerwacji
+CREATE OR REPLACE FUNCTION update_reservation_status() RETURNS void AS $$
+BEGIN
+    UPDATE reservations
+    SET status = 'done'
+    WHERE status = 'pending'
+    AND end_time < (CURRENT_TIMESTAMP - INTERVAL '2 hours');
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger function dla nowych rezerwacji
+CREATE OR REPLACE FUNCTION trigger_update_reservation_status()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM update_reservation_status();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger wykonujący się po dodaniu nowej rezerwacji
+CREATE TRIGGER after_reservation_insert
+    AFTER INSERT ON reservations
+    FOR EACH STATEMENT
+    EXECUTE FUNCTION trigger_update_reservation_status();
 
 -- Set ownership
 ALTER TYPE user_type OWNER TO "default";

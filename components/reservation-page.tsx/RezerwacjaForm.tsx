@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createReservation } from "@/lib/mutations";
-
+import ReservationApprovedModal from "../ui/ReservationApprovedModal";
 interface ReservationFormProps {
   userId: string;
   capacities: number[];
@@ -13,6 +13,8 @@ export default function RezerwacjaForm({
   capacities,
 }: ReservationFormProps) {
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [isReservationApprovedModalOpen, setIsReservationApprovedModalOpen] =
+    useState(false);
 
   return (
     <form action={createReservation} className="flex flex-col gap-4">
@@ -83,6 +85,7 @@ export default function RezerwacjaForm({
           </div>
 
           <button
+            onClick={() => setIsReservationApprovedModalOpen(true)}
             type="submit"
             className="bg-bronzelog text-white px-4 py-2 rounded-xl"
             disabled={!selectedTime}
@@ -91,6 +94,10 @@ export default function RezerwacjaForm({
           </button>
         </div>
       </section>
+      <ReservationApprovedModal
+        isOpen={isReservationApprovedModalOpen}
+        onClose={() => setIsReservationApprovedModalOpen(false)}
+      />
     </form>
   );
 }

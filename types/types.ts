@@ -57,7 +57,6 @@ export const ReservationStatusEnum = z.enum(["cancelled", "done", "pending"]);
 export const ReservationSchema = z.object({
   id: z.number(),
   user_id: z.string(),
-  table_id: z.number(),
   start_time: z.date(),
   end_time: z.date(),
   status: ReservationStatusEnum,
