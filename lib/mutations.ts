@@ -88,7 +88,8 @@ export const createReservation = async (formData: FormData) => {
       start_time: startTime,
       end_time: endTime,
       status: "pending" as const,
-      email_confirmation_sent: false,
+      notes: "",
+      source: "page",
       created_at: new Date(),
     };
 
@@ -96,15 +97,16 @@ export const createReservation = async (formData: FormData) => {
 
     const reservationResult = await client.query(
       `INSERT INTO restaurant.reservations 
-       (user_id, start_time, end_time, status, email_confirmation_sent, created_at) 
-       VALUES ($1, $2, $3, $4, $5, $6)
+       (user_id, start_time, end_time, status, notes, source, created_at) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING id`,
       [
         validatedReservation.user_id,
         validatedReservation.start_time,
         validatedReservation.end_time,
         validatedReservation.status,
-        validatedReservation.email_confirmation_sent,
+        validatedReservation.notes,
+        validatedReservation.source,
         validatedReservation.created_at,
       ]
     );
