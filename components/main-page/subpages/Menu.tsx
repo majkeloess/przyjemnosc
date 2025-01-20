@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import MenuItem from "../main-page/MenuItem";
+import MenuItem from "@/components/main-page/MenuItem";
 
 function Menu({ menuItems }: { menuItems: any[] }) {
   const [current, setIsCurrent] = useState<string>("");

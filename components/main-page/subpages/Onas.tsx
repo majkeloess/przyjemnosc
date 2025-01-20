@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Button from "../ui/Button";
+import Button from "@/components/ui/Button";
 
 function Onas() {
   return (

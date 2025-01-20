@@ -12,6 +12,8 @@ export type MenuEnumType =
 
 export type UserType = "admin" | "customer";
 
+export type ReservationSource = "page" | "phone";
+
 export const UserSchema = z.object({
   id: z.string(),
   username: z.string(),
@@ -60,11 +62,26 @@ export const ReservationSchema = z.object({
   start_time: z.date(),
   end_time: z.date(),
   status: ReservationStatusEnum,
-  email_confirmation_sent: z.boolean(),
+  notes: z.string().nullable(),
+  source: z.enum(["page", "phone"]),
   created_at: z.date(),
 });
 
 export type Reservation = z.infer<typeof ReservationSchema>;
+
+export const ReservationWithTableSchema = z.object({
+  id: z.number(),
+  user_id: z.string(),
+  start_time: z.date(),
+  end_time: z.date(),
+  status: ReservationStatusEnum,
+  notes: z.string().nullable(),
+  source: z.enum(["page", "phone"]),
+  created_at: z.date(),
+  table_number: z.number().nullable(),
+});
+
+export type ReservationWithTable = z.infer<typeof ReservationWithTableSchema>;
 
 export const ReservationTablesSchema = z.object({
   reservation_id: z.number(),
@@ -83,3 +100,20 @@ export const LoyaltyCodeSchema = z.object({
 });
 
 export type LoyaltyCode = z.infer<typeof LoyaltyCodeSchema>;
+
+export const ReservationExtendedSchema = z.object({
+  id: z.number(),
+  user_id: z.string(),
+  start_time: z.date(),
+  end_time: z.date(),
+  status: ReservationStatusEnum,
+  created_at: z.date(),
+  username: z.string(),
+  email: z.string().email(),
+  table_number: z.number().nullable(),
+  capacity: z.number().nullable(),
+  notes: z.string().nullable(),
+  source: z.enum(["page", "phone"]),
+});
+
+export type ReservationExtended = z.infer<typeof ReservationExtendedSchema>;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createReservation } from "@/lib/mutations";
-import ReservationApprovedModal from "../ui/ReservationApprovedModal";
+import ReservationApprovedModal from "@/components/modals/ReservationApprovedModal";
 interface ReservationFormProps {
   userId: string;
   capacities: number[];
@@ -15,9 +15,21 @@ export default function RezerwacjaForm({
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isReservationApprovedModalOpen, setIsReservationApprovedModalOpen] =
     useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (formData: FormData) => {
+    const result = await createReservation(formData);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setError(null);
+      setIsReservationApprovedModalOpen(true);
+    }
+  };
 
   return (
-    <form action={createReservation} className="flex flex-col gap-4">
+    <form action={handleSubmit} className="flex flex-col gap-4 xl:w-1/3">
+      {error && <div className="text-red-500 mb-4">{error}</div>}
       <input type="hidden" name="user_id" value={userId} />
       <input type="hidden" name="start_time" value={selectedTime} />
 
@@ -85,9 +97,8 @@ export default function RezerwacjaForm({
           </div>
 
           <button
-            onClick={() => setIsReservationApprovedModalOpen(true)}
             type="submit"
-            className="bg-bronzelog text-white px-4 py-2 rounded-xl"
+            className="bg-bronzelog text-white px-4 py-2 rounded-xl disabled:opacity-50"
             disabled={!selectedTime}
           >
             Złóż rezerwację!

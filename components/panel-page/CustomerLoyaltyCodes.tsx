@@ -7,7 +7,7 @@ const CustomerLoyaltyCodes = async ({ userId }: { userId: string }) => {
   }
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 xl:w-1/3">
       <h3 className="uppercase text-xl font-medium text-bronzelog">
         Twoje kody lojalnościowe
       </h3>

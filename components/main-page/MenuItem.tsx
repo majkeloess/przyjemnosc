@@ -1,6 +1,6 @@
 import React from "react";
-import RightArrow from "../ui/RightArrow";
-import DiagonalArrow from "../ui/DiagonalArrow";
+import RightArrow from "@/components/svg/RightArrow";
+import DiagonalArrow from "@/components/svg/DiagonalArrow";
 import type { MenuItem } from "@/types/types";
 
 function MenuItem({

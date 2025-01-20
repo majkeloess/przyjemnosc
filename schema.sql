@@ -26,6 +26,11 @@ CREATE TYPE menu_type AS ENUM (
     'napoje'
 );
 
+CREATE TYPE reservation_source AS ENUM (
+    'phone',
+    'page'
+);
+
 -- Create tables
 CREATE TABLE users (
     id uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
@@ -50,7 +55,8 @@ CREATE TABLE reservations (
     start_time timestamp NOT NULL,
     end_time timestamp NOT NULL,
     status reservation_status DEFAULT 'pending',
-    email_confirmation_sent boolean DEFAULT false,
+    notes text,
+    source reservation_source DEFAULT 'page',
     created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -80,29 +86,30 @@ CREATE TABLE menuitems (
 
 
 -- Funkcja do automatycznej aktualizacji statusu rezerwacji
-CREATE OR REPLACE FUNCTION update_reservation_status() RETURNS void AS $$
+CREATE OR REPLACE FUNCTION restaurant.update_reservation_status() RETURNS void AS $$
 BEGIN
-    UPDATE reservations
+    UPDATE restaurant.reservations
     SET status = 'done'
     WHERE status = 'pending'
-    AND end_time < (CURRENT_TIMESTAMP - INTERVAL '2 hours');
+    AND start_time < (CURRENT_TIMESTAMP - INTERVAL '2 hours');
 END;
 $$ LANGUAGE plpgsql;
 
 -- Trigger function dla nowych rezerwacji
-CREATE OR REPLACE FUNCTION trigger_update_reservation_status()
+CREATE OR REPLACE FUNCTION restaurant.trigger_update_reservation_status()
 RETURNS TRIGGER AS $$
 BEGIN
-    PERFORM update_reservation_status();
+    PERFORM restaurant.update_reservation_status();
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 -- Trigger wykonujący się po dodaniu nowej rezerwacji
+DROP TRIGGER IF EXISTS after_reservation_insert ON restaurant.reservations;
 CREATE TRIGGER after_reservation_insert
-    AFTER INSERT ON reservations
-    FOR EACH STATEMENT
-    EXECUTE FUNCTION trigger_update_reservation_status();
+    AFTER INSERT OR UPDATE ON restaurant.reservations
+    FOR EACH ROW
+    EXECUTE FUNCTION restaurant.trigger_update_reservation_status();
 
 -- Funkcja generująca losowy kod lojalnościowy
 CREATE OR REPLACE FUNCTION generate_loyalty_code(length INTEGER DEFAULT 8) 
@@ -165,6 +172,7 @@ CREATE TRIGGER after_reservation_status_update
 ALTER TYPE user_type OWNER TO "default";
 ALTER TYPE reservation_status OWNER TO "default";
 ALTER TYPE menu_type OWNER TO "default";
+ALTER TYPE reservation_source OWNER TO "default";
 ALTER TABLE users OWNER TO "default";
 ALTER TABLE tables OWNER TO "default";
 ALTER TABLE reservations OWNER TO "default";

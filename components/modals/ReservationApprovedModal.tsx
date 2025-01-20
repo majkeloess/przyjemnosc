@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../modals/Modal";
 
 const ReservationApprovedModal = ({
   isOpen,

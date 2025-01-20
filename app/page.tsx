@@ -1,8 +1,8 @@
 import NavMain from "@/components/main-page/NavMain";
-import Kontakt from "@/components/subpages/Kontakt";
-import Menu from "@/components/subpages/Menu";
-import Onas from "@/components/subpages/Onas";
-import MainArrow from "@/components/ui/MainArrow";
+import Kontakt from "@/components/main-page/subpages/Kontakt";
+import Menu from "@/components/main-page/subpages/Menu";
+import Onas from "@/components/main-page/subpages/Onas";
+import MainArrow from "@/components/svg/MainArrow";
 import Image from "next/image";
 import { getMenuItems } from "@/lib/queries";
 

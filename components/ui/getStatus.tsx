@@ -1,5 +1,5 @@
 import { Reservation } from "@/types/types";
-import { TrashIcon } from "./TrashIcon";
+import { TrashIcon } from "../svg/TrashIcon";
 import { cancelReservation } from "@/lib/mutations";
 
 export const getStatus = (reservation: Reservation) => {

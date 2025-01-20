@@ -3,15 +3,30 @@
 import { ReservationSchema, UserType } from "@/types/types";
 import { hashPassword } from "./bcrypt";
 import pool from "./db";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export const createUser = async (formData: FormData) => {
   const hashedPassword = await hashPassword(formData.get("password") as string);
   try {
+    const checkQuery = `SELECT email, username FROM restaurant.users 
+      WHERE email = $1 OR username = $2`;
+    const checkResult = await pool.query(checkQuery, [
+      formData.get("email") as string,
+      formData.get("username") as string,
+    ]);
+
+    if (checkResult.rows.length > 0) {
+      const existing = checkResult.rows[0];
+      if (existing.email === formData.get("email")) {
+        return { error: "Ten adres email jest już zajęty" };
+      }
+      if (existing.username === formData.get("username")) {
+        return { error: "Ta nazwa użytkownika jest już zajęta" };
+      }
+    }
+
     const query = `INSERT INTO restaurant.users (username, email, password_hash, type, created_at)  
-  VALUES ($1, $2, $3, $4, $5)
-  ON CONFLICT (email, username) DO NOTHING`;
+      VALUES ($1, $2, $3, $4, $5)`;
     await pool.query(query, [
       formData.get("username") as string,
       formData.get("email") as string,
@@ -19,10 +34,11 @@ export const createUser = async (formData: FormData) => {
       formData.get("type") as UserType,
       new Date(),
     ]);
+
     revalidatePath("/rezerwacje");
-    redirect("/rezerwacje");
+    return { success: true };
   } catch (error) {
-    throw error;
+    return { error: error instanceof Error ? error.message : "Nieznany błąd" };
   }
 };
 
@@ -61,7 +77,7 @@ export const createReservation = async (formData: FormData) => {
     );
 
     if (availableTableResult.rows.length === 0) {
-      throw new Error("Brak dostępnych stolików dla tej liczby osób");
+      return { error: "Brak dostępnych stolików dla tej liczby osób" };
     }
 
     const tableId = availableTableResult.rows[0].id;
@@ -103,13 +119,10 @@ export const createReservation = async (formData: FormData) => {
 
     await client.query("COMMIT");
     revalidatePath(`/rezerwacje/panel/${userId}`);
+    return { success: true };
   } catch (error) {
     await client.query("ROLLBACK");
-    throw new Error(
-      `Problem z rezerwacją: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`
-    );
+    return { error: error instanceof Error ? error.message : "Nieznany błąd" };
   } finally {
     client.release();
   }
@@ -123,14 +136,12 @@ export const cancelReservation = async (
   try {
     await client.query("BEGIN");
 
-    // First delete the table assignment
     await client.query(
       `DELETE FROM restaurant.reservationtables 
        WHERE reservation_id = $1`,
       [reservationId]
     );
 
-    // Then update the reservation status
     await client.query(
       `UPDATE restaurant.reservations 
        SET status = 'cancelled'
@@ -142,11 +153,7 @@ export const cancelReservation = async (
     revalidatePath(`/rezerwacje/panel/${userId}`);
   } catch (error) {
     await client.query("ROLLBACK");
-    throw new Error(
-      `Problem z anulowaniem rezerwacji: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`
-    );
+    throw new Error(error instanceof Error ? error.message : "Nieznany błąd");
   } finally {
     client.release();
   }
