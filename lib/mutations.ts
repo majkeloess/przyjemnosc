@@ -22,7 +22,6 @@ export const createUser = async (formData: FormData) => {
     revalidatePath("/rezerwacje");
     redirect("/rezerwacje");
   } catch (error) {
-    console.error("Error creating user:", error);
     throw error;
   }
 };
@@ -38,15 +37,18 @@ export const createReservation = async (formData: FormData) => {
     const startTime = new Date(`${date}T${time}`);
     const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
 
+    await client.query("BEGIN");
+
     const availableTableResult = await client.query(
       `SELECT t.id 
        FROM restaurant.tables t
        WHERE t.capacity >= $1
        AND NOT EXISTS (
-         SELECT 1 FROM restaurant.reservations r
+         SELECT 1 
+         FROM restaurant.reservations r
          JOIN restaurant.reservationtables rt ON r.id = rt.reservation_id
          WHERE rt.table_id = t.id
-         AND r.status = 'pending'
+         AND r.status != 'cancelled'
          AND (
            (r.start_time <= $2 AND r.end_time >= $2) OR
            (r.start_time <= $3 AND r.end_time >= $3) OR
@@ -76,12 +78,10 @@ export const createReservation = async (formData: FormData) => {
 
     const validatedReservation = ReservationSchema.parse(reservation);
 
-    await client.query("BEGIN");
-
     const reservationResult = await client.query(
       `INSERT INTO restaurant.reservations 
-       (user_id, start_time, end_time, status, email_confirmation_sent) 
-       VALUES ($1, $2, $3, $4, $5)
+       (user_id, start_time, end_time, status, email_confirmation_sent, created_at) 
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id`,
       [
         validatedReservation.user_id,
@@ -89,6 +89,7 @@ export const createReservation = async (formData: FormData) => {
         validatedReservation.end_time,
         validatedReservation.status,
         validatedReservation.email_confirmation_sent,
+        validatedReservation.created_at,
       ]
     );
 
@@ -101,12 +102,11 @@ export const createReservation = async (formData: FormData) => {
     );
 
     await client.query("COMMIT");
-
     revalidatePath(`/rezerwacje/panel/${userId}`);
   } catch (error) {
     await client.query("ROLLBACK");
     throw new Error(
-      `Failed to create reservation: ${
+      `Problem z rezerwacją: ${
         error instanceof Error ? error.message : "Unknown error"
       }`
     );
@@ -143,7 +143,7 @@ export const cancelReservation = async (
   } catch (error) {
     await client.query("ROLLBACK");
     throw new Error(
-      `Failed to cancel reservation: ${
+      `Problem z anulowaniem rezerwacji: ${
         error instanceof Error ? error.message : "Unknown error"
       }`
     );

@@ -1,7 +1,12 @@
-import { MenuItem, ReservationSchema, UserSchema } from "@/types/types";
+import {
+  LoyaltyCodeSchema,
+  MenuItem,
+  ReservationSchema,
+  UserSchema,
+} from "@/types/types";
 import { MenuItemSchema } from "@/types/types";
 import pool from "./db";
-import type { Reservation, User } from "@/types/types";
+import type { LoyaltyCode, Reservation, User } from "@/types/types";
 
 export const getUser = async (id: string): Promise<User> => {
   const { rows } = await pool.query(
@@ -45,8 +50,17 @@ export const getUserReservations = async (
   return ReservationSchema.array().parse(rows);
 };
 
+export const getUserLoyaltyCodes = async (
+  id: string
+): Promise<LoyaltyCode[]> => {
+  const { rows } = await pool.query(
+    "SELECT * FROM restaurant.loyaltycodes WHERE user_id = $1",
+    [id]
+  );
+  return LoyaltyCodeSchema.array().parse(rows);
+};
+
 export const getReservations = async (): Promise<Reservation[]> => {
   const { rows } = await pool.query("SELECT * FROM restaurant.reservations");
   return ReservationSchema.array().parse(rows);
 };
-  

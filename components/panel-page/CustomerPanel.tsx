@@ -2,6 +2,7 @@ import { getTableCapacity, getUserReservations } from "@/lib/queries";
 import RezerwacjaForm from "@/components/reservation-page.tsx/RezerwacjaForm";
 import { User } from "@/types/types";
 import CustomerReservations from "./CustomerReservations";
+import CustomerLoyaltyCodes from "../ui/CustomerLoyaltyCodes";
 
 export default async function CustomerPanel({ userData }: { userData: User }) {
   const capacities = await getTableCapacity();
@@ -12,9 +13,10 @@ export default async function CustomerPanel({ userData }: { userData: User }) {
       <div className="flex justify-center uppercase text-2xl font-medium">
         <h2>Witaj, {userData.username}</h2>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <RezerwacjaForm userId={userData.id} capacities={capacities} />
         <CustomerReservations userReservations={userReservations} />
+        <CustomerLoyaltyCodes userId={userData.id} />
       </div>
     </div>
   );
