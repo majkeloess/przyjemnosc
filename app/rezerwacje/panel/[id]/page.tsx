@@ -1,7 +1,7 @@
 import { getTableCapacity, getUser } from "@/lib/queries";
 import { redirect } from "next/navigation";
-import AdminPanel from "@/components/panel-page/AdminPanel";
-import CustomerPanel from "@/components/panel-page/CustomerPanel";
+import AdminPanel from "@/components/panel-page/admin/AdminPanel";
+import CustomerPanel from "@/components/panel-page/customer/CustomerPanel";
 
 export default async function PanelPage({
   params,

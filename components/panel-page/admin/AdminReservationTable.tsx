@@ -1,15 +1,8 @@
-import { getReservationsExtended } from "@/lib/queries";
-import { ReservationExtended, ReservationSource, User } from "@/types/types";
-import { getStatus } from "../ui/getStatus";
-import { formatDate, formatTime } from "@/lib/utils";
-import AdminReservationForm from "./AdminReservationForm";
+import { formatTime, sourceChanger } from "@/lib/utils";
+import { getStatus } from "@/components/ui/getStatus";
+import { formatDate } from "@/lib/utils";
 
-const sourceChanger = (source: ReservationSource) => {
-  if (source === "page") {
-    return "Strona";
-  }
-  return "Telefon";
-};
+import { ReservationExtended } from "@/types/types";
 
 const ReservationAdminTableHeader = () => {
   return (
@@ -49,7 +42,7 @@ const ReservationAdminTableRow = ({
   );
 };
 
-const ReservationAdminTable = ({
+const AdminReservationTable = ({
   reservations,
 }: {
   reservations: ReservationExtended[];
@@ -57,9 +50,6 @@ const ReservationAdminTable = ({
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto">
-        <h2 className="text-xl font-medium uppercase text-bronzelog">
-          Rezerwacje
-        </h2>
         <table className="w-full border-collapse">
           <ReservationAdminTableHeader />
           <tbody>
@@ -76,24 +66,4 @@ const ReservationAdminTable = ({
   );
 };
 
-export default async function AdminPanel({
-  userData,
-  capacities,
-}: {
-  userData: User;
-  capacities: number[];
-}) {
-  const reservations = await getReservationsExtended();
-
-  return (
-    <div className="flex flex-col gap-4 mx-auto w-full px-4 min-h-[80dvh] mt-4 mb-12">
-      <h1 className="text-2xl font-medium uppercase text-center">
-        Panel administracyjny
-      </h1>
-      <section className="flex flex-col gap-4 justify-center items-center">
-        <ReservationAdminTable reservations={reservations} />
-        <AdminReservationForm userId={userData.id} capacities={capacities} />
-      </section>
-    </div>
-  );
-}
+export default AdminReservationTable;

@@ -1,3 +1,5 @@
+import { ReservationSource } from "@/types/types";
+
 export const formatDate = (date: Date) => {
   return date.toLocaleDateString("pl-PL", {
     day: "2-digit",
@@ -11,4 +13,11 @@ export const formatTime = (date: Date) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+};
+
+export const sourceChanger = (source: ReservationSource) => {
+  if (source === "page") {
+    return "Strona";
+  }
+  return "Telefon";
 };

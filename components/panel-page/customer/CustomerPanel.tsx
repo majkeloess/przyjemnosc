@@ -1,9 +1,8 @@
 import { getUserReservations } from "@/lib/queries";
 import RezerwacjaForm from "@/components/reservation-page.tsx/RezerwacjaForm";
 import { User } from "@/types/types";
-import CustomerReservations from "./CustomerReservations";
 import CustomerLoyaltyCodes from "./CustomerLoyaltyCodes";
-
+import CustomerReservations from "./CustomerReservations";
 export default async function CustomerPanel({
   userData,
   capacities,

@@ -1,6 +1,6 @@
 import React from "react";
 import { Reservation, ReservationWithTable } from "@/types/types";
-import { getStatus } from "../ui/getStatus";
+import { getStatus } from "@/components/ui/getStatus";
 import { formatDate, formatTime } from "@/lib/utils";
 
 const ReservationRow = ({

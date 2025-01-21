@@ -102,3 +102,8 @@ export const getReservationsExtended = async (): Promise<
     return [];
   }
 };
+
+export const getAllUsers = async (): Promise<User[]> => {
+  const { rows } = await pool.query("SELECT * FROM restaurant.users");
+  return UserSchema.array().parse(rows);
+};

@@ -12,7 +12,6 @@ export const getStatus = (reservation: Reservation) => {
       <span className="text-blue-600">POTWIERDZONA</span>
       <button
         onClick={async () => {
-          "use server";
           await cancelReservation(reservation.id, reservation.user_id);
         }}
       >
