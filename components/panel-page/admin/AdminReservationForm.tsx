@@ -24,8 +24,8 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center">
-      <form action={handleSubmit} className="flex flex-col gap-4 max-w-2xl">
+    <div className="w-full flex flex-col gap-4 justify-center xl:max-w-2xl items-center mx-auto">
+      <form action={handleSubmit} className="w-full flex flex-col gap-4">
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <input type="hidden" name="user_id" value={userId} />
         <input type="hidden" name="start_time" value={selectedTime} />

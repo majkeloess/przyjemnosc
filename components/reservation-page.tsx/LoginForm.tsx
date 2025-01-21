@@ -1,16 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Button from "../ui/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/hooks/useAuth";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,10 +15,6 @@ function LoginForm() {
     setError("");
 
     try {
-      const user = await login(email, password);
-      console.log("Login successful, user:", user);
-
-      router.push(`/rezerwacje/panel/${user.id}`);
     } catch (err) {
       console.error("Błąd logowania:", err);
       setError("Nieprawidłowy email lub hasło");

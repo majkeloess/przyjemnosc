@@ -5,20 +5,22 @@ import AdminReservationTable from "./AdminReservationTable";
 import AdminReservationForm from "./AdminReservationForm";
 import { SetStateAction, Dispatch, useState } from "react";
 import AdminUsersTable from "./AdminUsersTable";
+import AdminLoyaltyCodes from "./AdminLoyaltyCodes";
+import AdminStatistics from "./AdminStatistics";
 
 const AdminPanelChoiceList: AdminPanelChoiceType[] = [
   "rezerwacje",
   "tworzenie rezerwacji",
-  "uzytkownicy",
-  "walidacja kodow",
+  "użytkownicy",
+  "walidacja kodów",
   "statystyki",
 ];
 
 type AdminPanelChoiceType =
   | "rezerwacje"
   | "tworzenie rezerwacji"
-  | "uzytkownicy"
-  | "walidacja kodow"
+  | "użytkownicy"
+  | "walidacja kodów"
   | "statystyki";
 
 const AdminSelectButtonArea = ({
@@ -29,7 +31,7 @@ const AdminSelectButtonArea = ({
   setPanelChoice: Dispatch<SetStateAction<AdminPanelChoiceType>>;
 }) => {
   return (
-    <section className="flex flex-row gap-4">
+    <section className="flex flex-row gap-4 flex-wrap justify-center">
       {AdminPanelChoiceList.map((choice) => (
         <AdminSelectButton
           currentChoice={panelChoice}
@@ -92,7 +94,9 @@ const AdminSelect = ({
         {panelChoice === "tworzenie rezerwacji" && (
           <AdminReservationForm userId={userData.id} capacities={capacities} />
         )}
-        {panelChoice === "uzytkownicy" && <AdminUsersTable users={users} />}
+        {panelChoice === "użytkownicy" && <AdminUsersTable users={users} />}
+        {panelChoice === "walidacja kodów" && <AdminLoyaltyCodes />}
+        {panelChoice === "statystyki" && <AdminStatistics />}
       </div>
     </div>
   );

@@ -119,12 +119,12 @@ CREATE TRIGGER after_reservation_insert
 CREATE OR REPLACE FUNCTION restaurant.generate_loyalty_code(length INTEGER DEFAULT 8) 
 RETURNS varchar AS $$
 DECLARE
-    chars text[] := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    chars text[] := '{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9}';
     result varchar := '';
     i integer;
 BEGIN
     FOR i IN 1..length LOOP
-        result := result || chars[ceil(random() * array_length(chars, 1))];
+        result := result || chars[1 + floor(random() * array_length(chars, 1))::integer];
     END LOOP;
     RETURN result;
 END;
@@ -481,3 +481,4 @@ ALTER TABLE reservations OWNER TO "default";
 ALTER TABLE reservationtables OWNER TO "default";
 ALTER TABLE loyaltycodes OWNER TO "default";
 ALTER TABLE menuitems OWNER TO "default";
+

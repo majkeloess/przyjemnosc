@@ -1,9 +1,7 @@
 import { formatTime, sourceChanger } from "@/lib/utils";
 import { getStatus } from "@/components/ui/getStatus";
 import { formatDate } from "@/lib/utils";
-
 import { ReservationExtended } from "@/types/types";
-
 const ReservationAdminTableHeader = () => {
   return (
     <thead>
@@ -49,8 +47,8 @@ const AdminReservationTable = ({
 }) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
+      <div className="overflow-x-auto flex justify-center">
+        <table className="max-w-6xl border-collapse">
           <ReservationAdminTableHeader />
           <tbody>
             {reservations.map((reservation) => (
