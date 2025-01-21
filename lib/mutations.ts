@@ -45,12 +45,35 @@ export const createUser = async (formData: FormData) => {
 export const createReservation = async (formData: FormData) => {
   const client = await pool.connect();
   try {
-    const userId = formData.get("user_id") as string;
-    const numberOfPeople = parseInt(formData.get("table_id") as string);
-    const date = formData.get("date") as string;
-    const time = formData.get("start_time") as string;
+    // Walidacja danych wejściowych
+    const userId = formData.get("user_id");
+    const numberOfPeopleStr = formData.get("table_id");
+    const date = formData.get("date");
+    const time = formData.get("start_time");
 
+    if (!userId || !numberOfPeopleStr || !date || !time) {
+      return { error: "Brak wymaganych danych" };
+    }
+
+    const numberOfPeople = parseInt(numberOfPeopleStr as string);
+    if (isNaN(numberOfPeople) || numberOfPeople <= 0) {
+      return { error: "Nieprawidłowa liczba osób" };
+    }
+
+    const notes = (formData.get("notes") as string) ?? "";
+    const source = (formData.get("source") as string) ?? "page";
+
+    // Walidacja daty i czasu
     const startTime = new Date(`${date}T${time}`);
+    if (isNaN(startTime.getTime())) {
+      return { error: "Nieprawidłowa data lub godzina" };
+    }
+
+    const now = new Date();
+    if (startTime < now) {
+      return { error: "Nie można zarezerwować stolika w przeszłości" };
+    }
+
     const endTime = new Date(startTime.getTime() + 2 * 60 * 60 * 1000);
 
     await client.query("BEGIN");
@@ -84,13 +107,13 @@ export const createReservation = async (formData: FormData) => {
 
     const reservation = {
       id: 0,
-      user_id: userId,
+      user_id: userId as string,
       start_time: startTime,
       end_time: endTime,
       status: "pending" as const,
-      notes: "",
-      source: "page",
-      created_at: new Date(),
+      notes,
+      source,
+      created_at: now,
     };
 
     const validatedReservation = ReservationSchema.parse(reservation);
@@ -124,7 +147,13 @@ export const createReservation = async (formData: FormData) => {
     return { success: true };
   } catch (error) {
     await client.query("ROLLBACK");
-    return { error: error instanceof Error ? error.message : "Nieznany błąd" };
+    console.error("Błąd podczas tworzenia rezerwacji:", error);
+    return {
+      error:
+        error instanceof Error
+          ? `Błąd: ${error.message}`
+          : "Wystąpił nieoczekiwany błąd podczas tworzenia rezerwacji",
+    };
   } finally {
     client.release();
   }

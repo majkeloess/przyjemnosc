@@ -1,11 +1,16 @@
-import { getTableCapacity, getUserReservations } from "@/lib/queries";
+import { getUserReservations } from "@/lib/queries";
 import RezerwacjaForm from "@/components/reservation-page.tsx/RezerwacjaForm";
 import { User } from "@/types/types";
 import CustomerReservations from "./CustomerReservations";
 import CustomerLoyaltyCodes from "./CustomerLoyaltyCodes";
 
-export default async function CustomerPanel({ userData }: { userData: User }) {
-  const capacities = await getTableCapacity();
+export default async function CustomerPanel({
+  userData,
+  capacities,
+}: {
+  userData: User;
+  capacities: number[];
+}) {
   const userReservations = await getUserReservations(userData.id);
 
   return (

@@ -1,7 +1,15 @@
 import { getReservationsExtended } from "@/lib/queries";
-import { ReservationExtended, User } from "@/types/types";
+import { ReservationExtended, ReservationSource, User } from "@/types/types";
 import { getStatus } from "../ui/getStatus";
 import { formatDate, formatTime } from "@/lib/utils";
+import AdminReservationForm from "./AdminReservationForm";
+
+const sourceChanger = (source: ReservationSource) => {
+  if (source === "page") {
+    return "Strona";
+  }
+  return "Telefon";
+};
 
 const ReservationAdminTableHeader = () => {
   return (
@@ -35,7 +43,7 @@ const ReservationAdminTableRow = ({
       <td className="p-2">{reservation.table_number}</td>
       <td className="p-2">{reservation.capacity}</td>
       <td className="p-2">{getStatus(reservation)}</td>
-      <td className="p-2">{reservation.source}</td>
+      <td className="p-2">{sourceChanger(reservation.source)}</td>
       <td className="p-2">{reservation.notes}</td>
     </tr>
   );
@@ -47,23 +55,34 @@ const ReservationAdminTable = ({
   reservations: ReservationExtended[];
 }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
-        <ReservationAdminTableHeader />
-        <tbody>
-          {reservations.map((reservation) => (
-            <ReservationAdminTableRow
-              key={reservation.id}
-              reservation={reservation}
-            />
-          ))}
-        </tbody>
-      </table>
+    <div className="flex flex-col gap-4">
+      <div className="overflow-x-auto">
+        <h2 className="text-xl font-medium uppercase text-bronzelog">
+          Rezerwacje
+        </h2>
+        <table className="w-full border-collapse">
+          <ReservationAdminTableHeader />
+          <tbody>
+            {reservations.map((reservation) => (
+              <ReservationAdminTableRow
+                key={reservation.id}
+                reservation={reservation}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default async function AdminPanel({ userData }: { userData: User }) {
+export default async function AdminPanel({
+  userData,
+  capacities,
+}: {
+  userData: User;
+  capacities: number[];
+}) {
   const reservations = await getReservationsExtended();
 
   return (
@@ -71,18 +90,9 @@ export default async function AdminPanel({ userData }: { userData: User }) {
       <h1 className="text-2xl font-medium uppercase text-center">
         Panel administracyjny
       </h1>
-      <section className="flex flex-col gap-4">
-        <h2 className="text-xl font-medium uppercase text-bronzelog">
-          Rezerwacje
-        </h2>
-        <div className="flex flex-col gap-4 max-w-[95vw] lg:max-w-[90vw] mx-auto">
-          <ReservationAdminTable reservations={reservations} />
-        </div>
-      </section>
-      <section className="flex flex-col gap-4">
-        <h2 className="text-xl font-medium uppercase text-bronzelog">
-          Zarezerwuj stolik
-        </h2>
+      <section className="flex flex-col gap-4 justify-center items-center">
+        <ReservationAdminTable reservations={reservations} />
+        <AdminReservationForm userId={userData.id} capacities={capacities} />
       </section>
     </div>
   );
