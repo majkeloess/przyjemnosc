@@ -189,3 +189,83 @@ export const cancelReservation = async (
     client.release();
   }
 };
+
+export const validateLoyaltyCode = async (code: string) => {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const query = `SELECT * FROM restaurant.loyaltycodes WHERE code = $1`;
+    const result = await client.query(query, [code]);
+    if (result.rows.length === 0) {
+      return { error: "Nieprawidłowy kod lojalnościowy" };
+    }
+    if (result.rows[0].used) {
+      return { error: "Kod lojalnościowy został już użyty" };
+    }
+
+    await client.query(
+      `UPDATE restaurant.loyaltycodes SET used = true WHERE code = $1`,
+      [code]
+    );
+
+    await client.query("COMMIT");
+    revalidatePath("/rezerwacje");
+    return { success: true };
+  } catch (error) {
+    await client.query("ROLLBACK");
+    return { error: "Nieprawidłowy kod lojalnościowy" };
+  } finally {
+    client.release();
+  }
+};
+
+export const deleteUser = async (userId: string) => {
+  const client = await pool.connect();
+  await client.query("DELETE FROM restaurant.users WHERE id = $1", [userId]);
+  client.release();
+  revalidatePath("/rezerwacje");
+};
+
+export const editUser = async (userId: string, formData: FormData) => {
+  const client = await pool.connect();
+  try {
+    const updates: { field: string; value: string }[] = [];
+
+    // Check each field and add to updates if present
+    const username = formData.get("username");
+    const email = formData.get("email");
+    const type = formData.get("type");
+
+    if (username)
+      updates.push({ field: "username", value: username as string });
+    if (email) updates.push({ field: "email", value: email as string });
+    if (type) updates.push({ field: "type", value: type as string });
+
+    if (updates.length === 0) {
+      return { error: "Nie podano żadnych danych do aktualizacji" };
+    }
+
+    const setClause = updates
+      .map((update, index) => `${update.field} = $${index + 1}`)
+      .join(", ");
+    const query = `UPDATE restaurant.users SET ${setClause} WHERE id = $${
+      updates.length + 1
+    }`;
+
+    const params = [...updates.map((update) => update.value), userId];
+
+    await client.query(query, params);
+    revalidatePath("/rezerwacje");
+    return { success: true };
+  } catch (error) {
+    console.error("Błąd podczas aktualizacji użytkownika:", error);
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "Nieznany błąd podczas aktualizacji użytkownika",
+    };
+  } finally {
+    client.release();
+  }
+};

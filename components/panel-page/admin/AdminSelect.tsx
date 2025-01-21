@@ -1,12 +1,22 @@
 "use client";
 
-import { ReservationExtended, User } from "@/types/types";
+import {
+  DailyReservationsStats,
+  CustomerLoyaltyStats,
+  TablePopularityStats,
+  MonthlyReservationsStats,
+  ReservationExtended,
+  User,
+  GeneralStats,
+  Statistics,
+} from "@/types/types";
 import AdminReservationTable from "./AdminReservationTable";
 import AdminReservationForm from "./AdminReservationForm";
 import { SetStateAction, Dispatch, useState } from "react";
 import AdminUsersTable from "./AdminUsersTable";
 import AdminLoyaltyCodes from "./AdminLoyaltyCodes";
 import AdminStatistics from "./AdminStatistics";
+import { AdminPanelChoiceType } from "@/types/types";
 
 const AdminPanelChoiceList: AdminPanelChoiceType[] = [
   "rezerwacje",
@@ -15,13 +25,6 @@ const AdminPanelChoiceList: AdminPanelChoiceType[] = [
   "walidacja kodów",
   "statystyki",
 ];
-
-type AdminPanelChoiceType =
-  | "rezerwacje"
-  | "tworzenie rezerwacji"
-  | "użytkownicy"
-  | "walidacja kodów"
-  | "statystyki";
 
 const AdminSelectButtonArea = ({
   panelChoice,
@@ -70,11 +73,13 @@ const AdminSelect = ({
   userData,
   capacities,
   users,
+  statistics,
 }: {
   reservations: ReservationExtended[];
   userData: User;
   capacities: number[];
   users: User[];
+  statistics: Statistics;
 }) => {
   const [panelChoice, setPanelChoice] =
     useState<AdminPanelChoiceType>("rezerwacje");
@@ -96,7 +101,9 @@ const AdminSelect = ({
         )}
         {panelChoice === "użytkownicy" && <AdminUsersTable users={users} />}
         {panelChoice === "walidacja kodów" && <AdminLoyaltyCodes />}
-        {panelChoice === "statystyki" && <AdminStatistics />}
+        {panelChoice === "statystyki" && (
+          <AdminStatistics statistics={statistics} />
+        )}
       </div>
     </div>
   );

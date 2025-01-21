@@ -117,3 +117,83 @@ export const ReservationExtendedSchema = z.object({
 });
 
 export type ReservationExtended = z.infer<typeof ReservationExtendedSchema>;
+
+export const DailyReservationsStatsSchema = z.object({
+  reservation_date: z.date(),
+  total_reservations: z.string().transform(Number),
+  completed: z.string().transform(Number),
+  cancelled: z.string().transform(Number),
+  pending: z.string().transform(Number),
+  unique_customers: z.string().transform(Number),
+  tables_used: z
+    .string()
+    .nullable()
+    .transform((val) => val ?? ""),
+});
+
+export type DailyReservationsStats = z.infer<
+  typeof DailyReservationsStatsSchema
+>;
+
+export const TablePopularityStatsSchema = z.object({
+  table_number: z.number(),
+  capacity: z.number(),
+  total_reservations: z.string().transform(Number),
+  successful_reservations: z.string().transform(Number),
+  success_rate: z.string().transform(Number),
+  cancellations: z.string().transform(Number),
+  efficiency_ratio: z.string().transform(Number),
+});
+
+export type TablePopularityStats = z.infer<typeof TablePopularityStatsSchema>;
+
+export const CustomerLoyaltyStatsSchema = z.object({
+  username: z.string(),
+  total_reservations: z.string().transform(Number),
+  completed_reservations: z.string().transform(Number),
+  loyalty_codes_received: z.string().transform(Number),
+  loyalty_codes_used: z.string().transform(Number),
+  completion_rate: z.string(),
+  last_reservation_date: z.date(),
+});
+
+export type CustomerLoyaltyStats = z.infer<typeof CustomerLoyaltyStatsSchema>;
+
+export const MonthlyReservationsStatsSchema = z.object({
+  month: z.string(),
+  total_reservations: z.string().transform(Number),
+  completed: z.string().transform(Number),
+  cancelled: z.string().transform(Number),
+  pending: z.string().transform(Number),
+  unique_tables_used: z.string().transform(Number),
+});
+
+export type MonthlyReservationsStats = z.infer<
+  typeof MonthlyReservationsStatsSchema
+>;
+
+export type AdminPanelChoiceType =
+  | "rezerwacje"
+  | "tworzenie rezerwacji"
+  | "użytkownicy"
+  | "walidacja kodów"
+  | "statystyki";
+
+export const GeneralStatsSchema = z.object({
+  total_reservations: z.string().transform(Number),
+  completed_reservations: z.string().transform(Number),
+  used_loyalty_codes: z.string().transform(Number),
+  total_tables: z.string().transform(Number),
+  total_menu_items: z.string().transform(Number),
+  total_users: z.string().transform(Number),
+});
+
+export type GeneralStats = z.infer<typeof GeneralStatsSchema>;
+
+export type Statistics = {
+  lastWeekReservationsStats: DailyReservationsStats[];
+  tablePopularityStats: TablePopularityStats[];
+  topCustomersStats: CustomerLoyaltyStats[];
+  monthlyStats: MonthlyReservationsStats[];
+  generalStats: GeneralStats;
+};

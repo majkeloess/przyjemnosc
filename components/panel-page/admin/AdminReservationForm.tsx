@@ -24,8 +24,11 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 justify-center xl:max-w-2xl items-center mx-auto">
-      <form action={handleSubmit} className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 justify-center xl:max-w-2xl items-center mx-auto mt-4">
+      <form
+        action={handleSubmit}
+        className="w-full flex flex-col gap-4 bg-white p-4 rounded-lg shadow"
+      >
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <input type="hidden" name="user_id" value={userId} />
         <input type="hidden" name="start_time" value={selectedTime} />
@@ -33,9 +36,11 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
         <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <label htmlFor="table_id">Wybierz liczbę osób</label>
+              <label htmlFor="table_id" className="text-lg font-semibold">
+                Wybierz liczbę osób
+              </label>
               <select
-                className="bg-back px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
+                className="px-4 py-2 border-2 border-bronzelog rounded-lg focus:outline-none  focus:ring-bronzelog"
                 id="table_id"
                 name="table_id"
                 required
@@ -49,9 +54,11 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="date">Wybierz datę</label>
+              <label htmlFor="date" className="text-lg font-semibold">
+                Wybierz datę
+              </label>
               <input
-                className="bg-back px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
+                className="px-4 py-2 border-2 border-bronzelog rounded-lg focus:outline-none  focus:ring-bronzelog"
                 type="date"
                 id="date"
                 name="date"
@@ -66,7 +73,9 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="time">Wybierz godzinę</label>
+              <label htmlFor="time" className="text-lg font-semibold">
+                Wybierz godzinę
+              </label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {Array.from({ length: 21 }, (_, i) => {
                   const hour = Math.floor(i / 2) + 12;
@@ -90,11 +99,11 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="notes">
+              <label htmlFor="notes" className="text-lg font-semibold">
                 Dodatkowe informacje (np. imię i nazwisko)
               </label>
               <textarea
-                className="bg-back px-4 text-bronzelog border-2 border-black rounded-xl"
+                className="px-4 py-2  border-bronzelog border-2 rounded-lg focus:outline-none  focus:ring-bronzelog"
                 name="notes"
                 id="notes"
                 required
@@ -103,7 +112,7 @@ const AdminReservationForm = ({ userId, capacities }: ReservationFormProps) => {
 
             <button
               type="submit"
-              className="bg-bronzelog text-white px-4 py-2 rounded-xl disabled:opacity-50"
+              className="bg-bronzelog text-white px-4 py-2 rounded-lg disabled:opacity-50 hover:bg-bronzelog/90 transition-colors"
               disabled={!selectedTime}
             >
               Złóż rezerwację!

@@ -46,20 +46,18 @@ const AdminReservationTable = ({
   reservations: ReservationExtended[];
 }) => {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="overflow-x-auto flex justify-center">
-        <table className="max-w-6xl border-collapse">
-          <ReservationAdminTableHeader />
-          <tbody>
-            {reservations.map((reservation) => (
-              <ReservationAdminTableRow
-                key={reservation.id}
-                reservation={reservation}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="overflow-x-auto flex justify-center p-4">
+      <table className="max-w-6xl bg-white rounded-lg shadow p-4">
+        <ReservationAdminTableHeader />
+        <tbody>
+          {reservations.map((reservation) => (
+            <ReservationAdminTableRow
+              key={reservation.id}
+              reservation={reservation}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
