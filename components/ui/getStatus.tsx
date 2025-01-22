@@ -24,6 +24,7 @@ export const getAdminStatus = (reservation: Reservation) => {
       <button
         onClick={async () => {
           await cancelReservation(reservation.id, reservation.user_id);
+          window.location.reload();
         }}
       >
         <TrashIcon height="20px" width="20px" color="#2563eb" />
