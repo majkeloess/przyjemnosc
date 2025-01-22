@@ -540,11 +540,85 @@ Zobacz implementację w [page.tsx](https://github.com/majkeloess/przyjemnosc/blo
    - Generowanie raportów i statystyk
 
 3. **Skrypt seedujący**
+
    - Inicjalne wypełnienie bazy przykładowymi danymi
    - Generowanie testowych rezerwacji
-   ```sql:schema.sql
-   startLine: 475
-   endLine: 550
+
+   ```sql
+   DO $$
+   DECLARE
+    curr_date timestamp;
+    reservation_time timestamp;
+    user_id uuid;
+    selected_table_id integer;
+    status_val restaurant.reservation_status;
+    reservation_id integer;
+    day integer;
+    hour integer;
+    minute integer;
+    date_str text;
+   BEGIN
+    day := 1;
+    WHILE day <= 31 LOOP
+        date_str := '2025-01-' || LPAD(day::text, 2, '0');
+        curr_date := date_str::timestamp;
+
+        hour := 12;
+        WHILE hour <= 21 LOOP
+            minute := 0;
+            WHILE minute <= 30 LOOP
+                IF random() < 0.7 THEN
+                    SELECT id INTO user_id
+                    FROM restaurant.users
+                    WHERE type = 'customer'::restaurant.user_type
+                    ORDER BY random()
+                    LIMIT 1;
+
+                    selected_table_id := floor(random() * 27 + 1);
+
+                    IF curr_date + (hour || ':' || minute)::interval < NOW() THEN
+                        IF random() < 0.1 THEN
+                            status_val := 'cancelled'::restaurant.reservation_status;
+                        ELSE
+                            status_val := 'done'::restaurant.reservation_status;
+                        END IF;
+                    ELSE
+                        status_val := 'pending'::restaurant.reservation_status;
+                    END IF;
+
+                    IF NOT EXISTS (
+                        SELECT 1
+                        FROM restaurant.reservations r
+                        JOIN restaurant.reservationtables rt ON r.id = rt.reservation_id
+                        WHERE rt.table_id = selected_table_id
+                        AND r.status = 'pending'::restaurant.reservation_status
+                        AND r.start_time <= (curr_date + (hour || ':' || minute)::interval + interval '2 hours')
+                        AND r.end_time >= (curr_date + (hour || ':' || minute)::interval)
+                    ) THEN
+                        INSERT INTO restaurant.reservations
+                            (user_id, start_time, end_time, status, source)
+                        VALUES
+                            (
+                                user_id,
+                                curr_date + (hour || ':' || minute)::interval,
+                                curr_date + (hour || ':' || minute)::interval + interval '2 hours',
+                                status_val,
+                                'page'::reservation_source
+                            )
+                        RETURNING id INTO reservation_id;
+
+                        INSERT INTO restaurant.reservationtables (reservation_id, table_id)
+                        VALUES (reservation_id, selected_table_id);
+                    END IF;
+                END IF;
+
+                minute := minute + 30;
+            END LOOP;
+            hour := hour + 1;
+        END LOOP;
+        day := day + 1;
+    END LOOP;
+   END $$;
    ```
 
 ### Dokumentacja użytkownika
