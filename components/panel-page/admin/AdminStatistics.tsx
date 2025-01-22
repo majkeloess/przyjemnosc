@@ -94,7 +94,6 @@ const AdminStatistics = ({ statistics }: { statistics: Statistics }) => {
         </ResponsiveContainer>
       </div>
 
-      {/* Top Customers */}
       <div className="bg-white p-4 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">Najlepsi Klienci</h2>
         <div className="overflow-x-auto">
@@ -103,7 +102,7 @@ const AdminStatistics = ({ statistics }: { statistics: Statistics }) => {
               <tr>
                 <th className="px-4 py-2">Nazwa użytkownika</th>
                 <th className="px-4 py-2">Liczba rezerwacji</th>
-                <th className="px-4 py-2">Zrealizowane</th>
+                <th className="px-4 py-2">Zrealizowane</th> 
                 <th className="px-4 py-2">Wskaźnik realizacji</th>
               </tr>
             </thead>

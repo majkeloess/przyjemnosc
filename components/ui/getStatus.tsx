@@ -10,13 +10,13 @@ export const getStatus = (reservation: Reservation) => {
   return (
     <div className="flex justify-center items-center gap-2">
       <span className="text-blue-600">POTWIERDZONA</span>
-      <button
+      {/* <button
         onClick={async () => {
           await cancelReservation(reservation.id, reservation.user_id);
         }}
       >
         <TrashIcon height="20px" width="20px" color="#2563eb" />
-      </button>
+      </button> */}
     </div>
   );
 };

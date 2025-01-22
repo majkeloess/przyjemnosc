@@ -28,12 +28,12 @@ export default function RezerwacjaForm({
   };
 
   return (
-    <form action={handleSubmit} className="flex flex-col gap-4 xl:w-1/3">
+    <form action={handleSubmit} className="flex flex-col gap-4">
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <input type="hidden" name="user_id" value={userId} />
       <input type="hidden" name="start_time" value={selectedTime} />
 
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-4 p-4 shadow-md rounded-xl bg-white">
         <h3 className="uppercase text-xl font-medium text-bronzelog">
           Zarezerwuj stolik
         </h3>
@@ -41,7 +41,7 @@ export default function RezerwacjaForm({
           <div className="flex flex-col gap-2">
             <label htmlFor="table_id">Wybierz liczbę osób</label>
             <select
-              className="bg-back px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
+              className="bg-white px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
               id="table_id"
               name="table_id"
               required
@@ -57,7 +57,7 @@ export default function RezerwacjaForm({
           <div className="flex flex-col gap-2">
             <label htmlFor="date">Wybierz datę</label>
             <input
-              className="bg-back px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
+              className="bg-white px-4 text-bronzelog border-2 border-bronzelog rounded-xl w-full"
               type="date"
               id="date"
               name="date"

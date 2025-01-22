@@ -6,9 +6,22 @@ import { useState } from "react";
 
 export default function AdminUsersTable({ users }: { users: User[] }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+
   const handleDeleteUser = async (id: string) => {
     await deleteUser(id);
   };
+
+  const handleEditClick = (userId: string) => {
+    setEditingUserId(userId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false);
+    setEditingUserId(null);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
       <div className="w-full overflow-x-auto bg-white p-4 rounded-lg shadow max-w-6xl">
@@ -31,7 +44,7 @@ export default function AdminUsersTable({ users }: { users: User[] }) {
                 <td className="px-4 py-2">{user.type}</td>
                 <td className="px-4 py-2 flex flex-row gap-2 justify-center items-center">
                   <button
-                    onClick={() => setIsEditModalOpen(true)}
+                    onClick={() => handleEditClick(user.id)}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors"
                   >
                     Edytuj
@@ -43,18 +56,18 @@ export default function AdminUsersTable({ users }: { users: User[] }) {
                     Usuń
                   </button>
                 </td>
-                {isEditModalOpen && (
-                  <EditUserModal
-                    userId={user.id}
-                    isOpen={isEditModalOpen}
-                    onClose={() => setIsEditModalOpen(false)}
-                  />
-                )}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {isEditModalOpen && editingUserId && (
+        <EditUserModal
+          userId={editingUserId}
+          isOpen={isEditModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }
