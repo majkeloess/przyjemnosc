@@ -2,17 +2,32 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setError(data.error);
+      } else {
+        router.push(`/rezerwacje/panel/${data.user.id}`);
+      }
     } catch (err) {
       console.error("Błąd logowania:", err);
       setError("Nieprawidłowy email lub hasło");
@@ -53,6 +68,7 @@ function LoginForm() {
             <button
               className="text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full"
               type="submit"
+              onClick={handleSubmit}
             >
               Zaloguj!
             </button>
