@@ -26,7 +26,23 @@ export async function middleware(request: NextRequest) {
     try {
       const decoded = await verifyJWT(token);
       const pathParts = request.nextUrl.pathname.split("/");
-      const userId = pathParts[pathParts.length - 1];
+      const userId = pathParts[3]; // /rezerwacje/panel/[userId]
+
+      const isAdminSubpage =
+        pathParts.length > 4 &&
+        ["reservations", "create", "users", "loyalty", "statistics"].includes(
+          pathParts[4]
+        );
+      console.log(decoded);
+
+      if (
+        isAdminSubpage &&
+        decoded.id !== "f69c0c45-10e0-42db-9eb6-2c195dcea1d2"
+      ) {
+        return NextResponse.redirect(
+          new URL(`/rezerwacje/panel/${decoded.id}`, request.url)
+        );
+      }
 
       if (decoded.id !== userId) {
         return NextResponse.redirect(

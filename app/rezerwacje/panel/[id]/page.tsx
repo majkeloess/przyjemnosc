@@ -15,7 +15,6 @@ export default async function PanelPage({
     if (!userData) {
       redirect("/rezerwacje");
     }
-
     const Panel = userData.type === "admin" ? AdminPanel : CustomerPanel;
 
     return <Panel userData={userData} capacities={capacities} />;

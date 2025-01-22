@@ -330,17 +330,6 @@ FROM restaurant.daily_reservations_report
 GROUP BY TO_CHAR(reservation_date, 'YYYY-MM')
 ORDER BY month DESC;
 
--- Raport efektywności stolików (które stoliki są najbardziej dochodowe)
-SELECT 
-    table_number,
-    capacity,
-    total_reservations,
-    successful_reservations,
-    success_rate,
-    ROUND(successful_reservations::DECIMAL / capacity, 2) as efficiency_ratio
-FROM restaurant.table_popularity_report
-ORDER BY efficiency_ratio DESC;
-
 
 -- Walidacja emaila przy pomocy CHECK constraint
 ALTER TABLE restaurant.users

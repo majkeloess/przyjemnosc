@@ -1,3 +1,5 @@
+"use client";
+
 import { Statistics } from "@/types/types";
 import {
   BarChart,
@@ -9,9 +11,6 @@ import {
   Legend,
   LineChart,
   Line,
-  PieChart,
-  Pie,
-  Cell,
   ResponsiveContainer,
 } from "recharts";
 
@@ -102,7 +101,7 @@ const AdminStatistics = ({ statistics }: { statistics: Statistics }) => {
               <tr>
                 <th className="px-4 py-2">Nazwa użytkownika</th>
                 <th className="px-4 py-2">Liczba rezerwacji</th>
-                <th className="px-4 py-2">Zrealizowane</th> 
+                <th className="px-4 py-2">Zrealizowane</th>
                 <th className="px-4 py-2">Wskaźnik realizacji</th>
               </tr>
             </thead>

@@ -1,100 +1,61 @@
 "use client";
 
-import { ReservationExtended, User, Statistics } from "@/types/types";
-import AdminReservationTable from "./AdminReservationTable";
-import AdminReservationForm from "./AdminReservationForm";
-import { SetStateAction, Dispatch, useState } from "react";
-import AdminUsersTable from "./AdminUsersTable";
-import AdminLoyaltyCodes from "./AdminLoyaltyCodes";
-import AdminStatistics from "./AdminStatistics";
-import { AdminPanelChoiceType } from "@/types/types";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const AdminPanelChoiceList: AdminPanelChoiceType[] = [
-  "rezerwacje",
-  "tworzenie rezerwacji",
-  "użytkownicy",
-  "walidacja kodów",
-  "statystyki",
+const AdminPanelChoiceList: { label: string; path: string }[] = [
+  { label: "rezerwacje", path: "reservations" },
+  { label: "tworzenie rezerwacji", path: "create" },
+  { label: "użytkownicy", path: "users" },
+  { label: "walidacja kodów", path: "loyalty" },
+  { label: "statystyki", path: "statistics" },
 ];
 
-const AdminSelectButtonArea = ({
-  panelChoice,
-  setPanelChoice,
+const AdminSelectButton = ({
+  path,
+  label,
+  userId,
 }: {
-  panelChoice: AdminPanelChoiceType;
-  setPanelChoice: Dispatch<SetStateAction<AdminPanelChoiceType>>;
+  path: string;
+  label: string;
+  userId: string;
 }) => {
+  const pathname = usePathname();
+  const fullPath = `/rezerwacje/panel/${userId}/${path}`;
+
+  return (
+    <Link href={fullPath}>
+      <button
+        className={`text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full ${
+          pathname === fullPath ? "bg-bronzelog text-white" : ""
+        }`}
+      >
+        {label}
+      </button>
+    </Link>
+  );
+};
+
+const AdminSelectButtonArea = ({ userId }: { userId: string }) => {
   return (
     <section className="flex flex-row gap-4 flex-wrap justify-center">
       {AdminPanelChoiceList.map((choice) => (
         <AdminSelectButton
-          currentChoice={panelChoice}
-          key={choice}
-          choice={choice}
-          setPanelChoice={setPanelChoice}
+          key={choice.path}
+          path={choice.path}
+          label={choice.label}
+          userId={userId}
         />
       ))}
     </section>
   );
 };
 
-const AdminSelectButton = ({
-  currentChoice,
-  choice,
-  setPanelChoice,
-}: {
-  currentChoice: AdminPanelChoiceType;
-  choice: AdminPanelChoiceType;
-  setPanelChoice: Dispatch<SetStateAction<AdminPanelChoiceType>>;
-}) => {
-  return (
-    <button
-      className={`text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full ${
-        currentChoice === choice ? "bg-bronzelog text-white" : ""
-      }`}
-      onClick={() => setPanelChoice(choice)}
-    >
-      {choice}
-    </button>
-  );
-};
-
-const AdminSelect = ({
-  reservations,
-  userData,
-  capacities,
-  users,
-  statistics,
-}: {
-  reservations: ReservationExtended[];
-  userData: User;
-  capacities: number[];
-  users: User[];
-  statistics: Statistics;
-}) => {
-  const [panelChoice, setPanelChoice] =
-    useState<AdminPanelChoiceType>("rezerwacje");
-
+const AdminSelect = ({ userId }: { userId: string }) => {
   return (
     <div className="flex flex-col gap-4 justify-center w-full">
       <div className="flex flex-row justify-center">
-        <AdminSelectButtonArea
-          panelChoice={panelChoice}
-          setPanelChoice={setPanelChoice}
-        />
-      </div>
-      <div className="flex flex-col gap-4 justify-center">
-        {panelChoice === "rezerwacje" && (
-          <AdminReservationTable reservations={reservations} />
-        )}
-        {panelChoice === "tworzenie rezerwacji" && (
-          <AdminReservationForm userId={userData.id} capacities={capacities} />
-        )}
-        {panelChoice === "użytkownicy" && <AdminUsersTable users={users} />}
-        {panelChoice === "walidacja kodów" && <AdminLoyaltyCodes />}
-        {panelChoice === "statystyki" && (
-          <AdminStatistics statistics={statistics} />
-        )}
+        <AdminSelectButtonArea userId={userId} />
       </div>
     </div>
   );
