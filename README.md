@@ -1,5 +1,7 @@
-# System zarządzania rezerwacjami dla restauracji "Przyjemność"
 ![Projekt bez nazwy](https://github.com/user-attachments/assets/cac18e88-b0c7-4b77-8f57-b0514f122914)
+# System zarządzania rezerwacjami dla restauracji "Przyjemność"
+
+Projekt został zrealizowany w celu zaliczenia przedmiotu Bazy Danych 1 WFIIS AGH 24/25.
 
 ## Projekt koncepcji i założenia
 
@@ -771,3 +773,5 @@ npm run dev
 - Dodanie do panelu administratora widoku jakie stoliki są dostępne w tym momencie
 - Zbudowanie systemu mailowego do rejestracji jak i do nadchodzących rezerwacji
 - Posiadanie pełnej funkcjonalności restauracji nie tylko rezerwacji a równiez obsługa zamówień i płatności
+
+
