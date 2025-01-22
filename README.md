@@ -4,7 +4,7 @@
 
 ### Cele projektu
 
-Projekt stanowi kompleksowe rozwiązanie do zarządzania rezerwacjami stolików w restauracji. System został zaprojektowany jako aplikacja fullstackowa wykorzystująca technologie Next.js oraz bazę danych PostgreSQL. Głównym celem jest automatyzacja procesu rezerwacji oraz efektywne zarządzanie stolikami w restauracji.
+Projekt stanowi kompleksowe rozwiązanie do zarządzania rezerwacjami stolików w restauracji. System został zaprojektowany jako aplikacja fullstackowa wykorzystująca technologie Next.js oraz bazę danych PostgreSQL. Głównym celem jest automatyzacja procesu rezerwacji oraz efektywne zarządzanie stolikami w restauracji. Aplikacja jest w pełni responsywna na komputerach jak i na urządzeniach mobilnych.
 
 #### Główne cele projektu:
 
@@ -759,4 +759,11 @@ npm run dev
    - Wszystkie tabele i funkcje zostaną utworzone w schemacie 'restaurant'
 
 4. **Pierwsze uruchomienie**
+
    Aplikacja będzie dostępna pod adresem http://localhost:3000
+
+## Usprawnienia aplikacji
+
+- Dodanie do panelu administratora widoku jakie stoliki są dostępne w tym momencie
+- Zbudowanie systemu mailowego do rejestracji jak i do nadchodzących rezerwacji
+- Posiadanie pełnej funkcjonalności restauracji nie tylko rezerwacji a równiez obsługa zamówień i płatności

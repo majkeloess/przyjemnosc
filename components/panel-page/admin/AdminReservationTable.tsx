@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { formatTime, sourceChanger } from "@/lib/utils";
-import { getStatus, getAdminStatus } from "@/components/ui/getStatus";
+import { getAdminStatus } from "@/components/ui/getStatus";
 import { formatDate } from "@/lib/utils";
 import { ReservationExtended } from "@/types/types";
 import debounce from "lodash/debounce";
@@ -57,27 +57,27 @@ const FilterBar = ({
   }, 300);
 
   return (
-    <div className="flex gap-4 mb-4 p-4 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 p-4 bg-white rounded-lg shadow-md w-full">
       <input
         type="text"
         placeholder="Szukaj po username..."
         onChange={(e) => debouncedUsernameChange(e.target.value)}
-        className="p-2 border rounded"
+        className="p-2 border border-bronzelog text-bronzelog rounded text-sm"
       />
       <select
         onChange={(e) => onFilterChange({ status: e.target.value })}
-        className="p-2 border rounded"
+        className="p-2 border border-bronzelog text-bronzelog rounded text-sm"
       >
-        <option value="">Wszystkie statusy</option>
+        <option value="">Status</option>
         <option value="pending">Potwierdzone</option>
         <option value="done">Odbyte</option>
         <option value="cancelled">Anulowane</option>
       </select>
       <select
         onChange={(e) => onFilterChange({ source: e.target.value })}
-        className="p-2 border rounded"
+        className="p-2 border border-bronzelog text-bronzelog rounded text-sm"
       >
-        <option value="">Wszystkie źródła</option>
+        <option value="">Źródło</option>
         <option value="page">Web</option>
         <option value="phone">Telefon</option>
       </select>
@@ -87,9 +87,9 @@ const FilterBar = ({
             capacity: e.target.value ? parseInt(e.target.value) : undefined,
           })
         }
-        className="p-2 border rounded"
+        className="p-2 border border-bronzelog text-bronzelog rounded text-sm"
       >
-        <option value="">Liczba osób</option>
+        <option value="">Osoby</option>
         {capacities.map((capacity) => (
           <option key={capacity} value={capacity}>
             {capacity}
@@ -110,21 +110,21 @@ const Pagination = ({
   onPageChange: (page: number) => void;
 }) => {
   return (
-    <div className="flex justify-center gap-2 mt-4">
+    <div className="flex justify-center gap-2 mt-4 text-sm">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 border rounded disabled:opacity-50"
+        className="px-2 sm:px-4 py-1 sm:py-2 border border-bronzelog text-bronzelog rounded disabled:opacity-50"
       >
         Poprzednia
       </button>
-      <span className="px-4 py-2">
-        Strona {currentPage} z {totalPages}
+      <span className="px-2 sm:px-4 py-1 sm:py-2">
+        {currentPage}/{totalPages}
       </span>
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 border rounded disabled:opacity-50"
+        className="px-2 sm:px-4 py-1 sm:py-2 border border-bronzelog text-bronzelog rounded disabled:opacity-50"
       >
         Następna
       </button>
@@ -175,7 +175,7 @@ const AdminReservationTable = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="w-full max-w-full overflow-hidden px-2 sm:px-4">
       <FilterBar onFilterChange={handleFilterChange} capacities={capacities} />
       {reservations.length === 0 ? (
         <div className="text-center p-4">
@@ -188,8 +188,8 @@ const AdminReservationTable = ({
         </div>
       ) : (
         <>
-          <div className="overflow-x-auto flex justify-center p-4">
-            <table className="max-w-6xl bg-white rounded-lg shadow p-4">
+          <div className="w-full overflow-x-auto">
+            <table className="w-full bg-white rounded-lg shadow p-4 min-w-[800px]">
               <ReservationAdminTableHeader />
               <tbody>
                 {reservations.map((reservation) => (
