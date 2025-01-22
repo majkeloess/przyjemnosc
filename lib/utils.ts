@@ -1,6 +1,7 @@
 import { ReservationSource } from "@/types/types";
 
-export const formatDate = (date: Date) => {
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
   return date.toLocaleDateString("pl-PL", {
     day: "2-digit",
     month: "2-digit",
@@ -9,7 +10,8 @@ export const formatDate = (date: Date) => {
 };
 
 export const formatTime = (date: Date) => {
-  return date.toLocaleTimeString("pl-PL", {
+  const time = new Date(date);
+  return time.toLocaleTimeString("pl-PL", {
     hour: "2-digit",
     minute: "2-digit",
   });

@@ -33,7 +33,6 @@ export async function middleware(request: NextRequest) {
         ["reservations", "create", "users", "loyalty", "statistics"].includes(
           pathParts[4]
         );
-      console.log(decoded);
 
       if (
         isAdminSubpage &&

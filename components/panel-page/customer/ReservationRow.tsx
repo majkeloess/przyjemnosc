@@ -33,7 +33,7 @@ export default function ReservationRow({
   return (
     <div className={`grid ${action ? "grid-cols-5" : "grid-cols-4"} w-full`}>
       <span className="text-center text-sm xl:text-base">
-        {formatDate(reservation.start_time)}
+        {formatDate(reservation.start_time.toString())}
       </span>
       <span className="text-center text-sm xl:text-base">
         {formatTime(reservation.start_time)}

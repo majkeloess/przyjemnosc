@@ -87,12 +87,76 @@ export const getReservations = async (): Promise<Reservation[]> => {
   return ReservationSchema.array().parse(rows);
 };
 
-export const getReservationsExtended = async (): Promise<
-  ReservationExtended[]
-> => {
+type FilterParams = {
+  page?: number;
+  pageSize?: number;
+  username?: string;
+  status?: string;
+  source?: string;
+  capacity?: number;
+};
+
+export const getReservationsExtended = async ({
+  page = 1,
+  pageSize = 20,
+  username = "",
+  status = "",
+  source = "",
+  capacity,
+}: FilterParams = {}): Promise<{
+  reservations: ReservationExtended[];
+  total: number;
+}> => {
   try {
-    const { rows } = await pool.query(
-      `SELECT 
+    const offset = (page - 1) * pageSize;
+    const params: any[] = [];
+    let whereConditions = [];
+    let paramCounter = 1;
+
+    if (username) {
+      whereConditions.push(`LOWER(u.username) LIKE LOWER($${paramCounter})`);
+      params.push(`%${username}%`);
+      paramCounter++;
+    }
+
+    if (status) {
+      whereConditions.push(`r.status = $${paramCounter}`);
+      params.push(status);
+      paramCounter++;
+    }
+
+    if (source) {
+      whereConditions.push(`r.source = $${paramCounter}`);
+      params.push(source);
+      paramCounter++;
+    }
+
+    if (capacity) {
+      whereConditions.push(`t.capacity = $${paramCounter}`);
+      params.push(capacity);
+      paramCounter++;
+    }
+
+    const whereClause = whereConditions.length
+      ? `WHERE ${whereConditions.join(" AND ")}`
+      : "";
+
+    // Get total count
+    const countQuery = `
+      SELECT COUNT(DISTINCT r.id)
+      FROM restaurant.reservations r
+      LEFT JOIN restaurant.users u ON r.user_id = u.id
+      LEFT JOIN restaurant.reservationtables rt ON r.id = rt.reservation_id
+      LEFT JOIN restaurant.tables t ON rt.table_id = t.id
+      ${whereClause}
+    `;
+
+    const { rows: countRows } = await pool.query(countQuery, params);
+    const total = parseInt(countRows[0].count);
+
+    // Get paginated data
+    const dataQuery = `
+      SELECT 
         r.*,
         u.username,
         u.email,
@@ -102,13 +166,20 @@ export const getReservationsExtended = async (): Promise<
       LEFT JOIN restaurant.users u ON r.user_id = u.id
       LEFT JOIN restaurant.reservationtables rt ON r.id = rt.reservation_id
       LEFT JOIN restaurant.tables t ON rt.table_id = t.id
-      ORDER BY r.start_time DESC`
-    );
+      ${whereClause}
+      ORDER BY r.start_time DESC
+      LIMIT $${paramCounter} OFFSET $${paramCounter + 1}
+    `;
 
-    return ReservationExtendedSchema.array().parse(rows);
+    const { rows } = await pool.query(dataQuery, [...params, pageSize, offset]);
+
+    return {
+      reservations: ReservationExtendedSchema.array().parse(rows),
+      total,
+    };
   } catch (error) {
     console.error("Error fetching extended reservations:", error);
-    return [];
+    return { reservations: [], total: 0 };
   }
 };
 
