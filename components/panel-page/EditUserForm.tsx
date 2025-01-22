@@ -36,7 +36,6 @@ const EditUserForm = ({
             type="text"
             name="username"
             id="username"
-            required
           />
           <label htmlFor="email">e-mail</label>
           <input

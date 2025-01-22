@@ -19,7 +19,7 @@ export default async function AdminPanel({
   const statistics = await getAllStats();
   return (
     <div className="flex flex-col gap-4 mx-auto w-full px-4 min-h-[80dvh] mt-4 mb-12">
-      <div>
+      <div className="flex justify-center items-center flex-row gap-4">
         <h1 className="text-2xl font-medium uppercase text-center">
           Panel administracyjny
         </h1>

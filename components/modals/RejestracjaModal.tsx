@@ -1,4 +1,5 @@
 import Modal from "@/components/modals/Modal";
+import Link from "next/link";
 
 export default function RejestracjaModal({
   isOpen,
@@ -13,7 +14,11 @@ export default function RejestracjaModal({
         Konto zostało utworzone pomyślnie!
       </h1>
       <p className="text-center">
-        Możesz się teraz zalogować na swoje konto oraz zarezerwować stolik.
+        Możesz się teraz{" "}
+        <Link href="/rezerwacje" className="text-bronzelog font-bold underline">
+          zalogować
+        </Link>{" "}
+        na swoje konto oraz zarezerwować stolik.
       </p>
     </Modal>
   );

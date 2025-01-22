@@ -45,7 +45,6 @@ export const createUser = async (formData: FormData) => {
 export const createReservation = async (formData: FormData) => {
   const client = await pool.connect();
   try {
-    // Walidacja danych wejściowych
     const userId = formData.get("user_id");
     const numberOfPeopleStr = formData.get("table_id");
     const date = formData.get("date");
@@ -231,15 +230,12 @@ export const editUser = async (userId: string, formData: FormData) => {
   try {
     const updates: { field: string; value: string }[] = [];
 
-    // Check each field and add to updates if present
     const username = formData.get("username");
     const email = formData.get("email");
-    const type = formData.get("type");
 
     if (username)
       updates.push({ field: "username", value: username as string });
     if (email) updates.push({ field: "email", value: email as string });
-    if (type) updates.push({ field: "type", value: type as string });
 
     if (updates.length === 0) {
       return { error: "Nie podano żadnych danych do aktualizacji" };

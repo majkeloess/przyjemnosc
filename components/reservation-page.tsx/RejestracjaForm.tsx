@@ -12,6 +12,19 @@ function RejestracjaForm() {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirm-password") as string;
+
+    if (password !== confirmPassword) {
+      setError("Hasła nie są identyczne");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Hasło musi mieć co najmniej 6 znaków");
+      return;
+    }
+
     const result = await createUser(formData);
     if (result.error) {
       setError(result.error);

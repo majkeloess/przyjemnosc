@@ -1,15 +1,6 @@
 "use client";
 
-import {
-  DailyReservationsStats,
-  CustomerLoyaltyStats,
-  TablePopularityStats,
-  MonthlyReservationsStats,
-  ReservationExtended,
-  User,
-  GeneralStats,
-  Statistics,
-} from "@/types/types";
+import { ReservationExtended, User, Statistics } from "@/types/types";
 import AdminReservationTable from "./AdminReservationTable";
 import AdminReservationForm from "./AdminReservationForm";
 import { SetStateAction, Dispatch, useState } from "react";
