@@ -423,10 +423,7 @@ ORDER BY month DESC;
    - Walidacja email i hasła
    - Automatyczne przypisanie roli 'customer'
 
-   ```typescript:components/reservation-page.tsx/RejestracjaForm.tsx
-   startLine: 50
-   endLine: 74
-   ```
+   Zobacz implementację w [RejestracjaForm.tsx](https://github.com/majkeloess/przyjemnosc/blob/main/components/reservation-page.tsx/RejestracjaForm.tsx#L50-L74)
 
 2. **Formularz rezerwacji stolika**
 
@@ -435,10 +432,7 @@ ORDER BY month DESC;
    - Automatyczna walidacja dostępności
    - Obsługa błędów i potwierdzeń
 
-   ```typescript:components/reservation-page.tsx/RezerwacjaForm.tsx
-   startLine: 11
-   endLine: 54
-   ```
+   Zobacz implementację w [RezerwacjaForm.tsx](https://github.com/majkeloess/przyjemnosc/blob/main/components/reservation-page.tsx/RezerwacjaForm.tsx#L11-L54)
 
 3. **System powiązań formularzy:**
    - Rezerwacja możliwa tylko dla zalogowanych użytkowników
@@ -454,38 +448,28 @@ ORDER BY month DESC;
    - Statystyki rezerwacji z ostatnich 7 dni
    - Podsumowanie statusów rezerwacji
 
-   ```sql:schema.sql
-   startLine: 281
-   endLine: 292
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L281-L292)
 
 2. **Raport popularności stolików**
 
    - Analiza wykorzystania stolików
    - Wskaźnik sukcesu rezerwacji
 
-   ```sql:schema.sql
-   startLine: 294
-   endLine: 304
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L294-L304)
 
 3. **Raport lojalności klientów**
 
    - Top 10 najbardziej aktywnych klientów
    - Statystyki wykorzystania kodów lojalnościowych
 
-   ```sql:schema.sql
-   startLine: 306
-   endLine: 319
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L306-L319)
 
 4. **Raport miesięczny**
+
    - Agregacja danych miesięcznych
    - Trendy w rezerwacjach
-   ```sql:schema.sql
-   startLine: 321
-   endLine: 331
-   ```
+
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L321-L331)
 
 ### Panel sterowania aplikacji
 
@@ -495,10 +479,7 @@ ORDER BY month DESC;
 - Możliwość anulowania rezerwacji
 - Historia kodów lojalnościowych
 
-```typescript:components/panel-page/customer/ReservationRow.tsx
-startLine: 26
-endLine: 61
-```
+Zobacz implementację w [ReservationRow.tsx](https://github.com/majkeloess/przyjemnosc/blob/main/components/panel-page/customer/ReservationRow.tsx#L26-L61)
 
 #### Panel administratora:
 
@@ -506,10 +487,7 @@ endLine: 61
 - Dostęp do raportów i statystyk
 - Zarządzanie menu i stolikami
 
-```typescript:app/rezerwacje/panel/[id]/reservations/page.tsx
-startLine: 1
-endLine: 20
-```
+Zobacz implementację w [page.tsx](https://github.com/majkeloess/przyjemnosc/blob/main/app/rezerwacje/panel/[id]/reservations/page.tsx#L1-L20)
 
 ### Makropolecenia
 
@@ -520,38 +498,28 @@ endLine: 20
    - Automatyczna aktualizacja statusów
    - Generowanie kodów lojalnościowych
 
-   ```sql:schema.sql
-   startLine: 87
-   endLine: 116
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L87-L116)
 
 2. **System lojalnościowy:**
 
    - Automatyczne generowanie kodów
    - Walidacja i obsługa kodów
 
-   ```sql:schema.sql
-   startLine: 118
-   endLine: 177
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L118-L177)
 
 3. **Walidacja danych:**
 
    - Sprawdzanie dostępności stolików
    - Kontrola nakładania się rezerwacji
 
-   ```sql:schema.sql
-   startLine: 344
-   endLine: 378
-   ```
+   Zobacz implementację w [schema.sql](https://github.com/majkeloess/przyjemnosc/blob/main/schema.sql#L344-L378)
 
 4. **Operacje na rezerwacjach:**
+
    - Tworzenie rezerwacji z walidacją
    - Anulowanie rezerwacji
-   ```typescript:lib/mutations.ts
-   startLine: 45
-   endLine: 190
-   ```
+
+   Zobacz implementację w [mutations.ts](https://github.com/majkeloess/przyjemnosc/blob/main/lib/mutations.ts#L45-L190)
 
 ## Dokumentacja
 
@@ -612,8 +580,31 @@ endLine: 20
 #### Stack technologiczny:
 
 ```json:package.json
-startLine: 11
-endLine: 26
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
+    "bcrypt": "^5.1.1",
+    "d3-time": "^3.1.0",
+    "d3-time-format": "^4.1.0",
+    "jose": "^5.9.6",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "next": "15.0.3",
+    "pg": "^8.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.15.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
 ```
 
 #### Główne komponenty systemu:
