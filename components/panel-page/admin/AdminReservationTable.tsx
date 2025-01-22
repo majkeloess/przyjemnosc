@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { formatTime, sourceChanger } from "@/lib/utils";
-import { getStatus } from "@/components/ui/getStatus";
+import { getStatus, getAdminStatus } from "@/components/ui/getStatus";
 import { formatDate } from "@/lib/utils";
 import { ReservationExtended } from "@/types/types";
 import debounce from "lodash/debounce";
@@ -38,7 +38,7 @@ const ReservationAdminTableRow = ({
       <td className="p-2">{reservation.email}</td>
       <td className="p-2">{reservation.table_number}</td>
       <td className="p-2">{reservation.capacity}</td>
-      <td className="p-2">{getStatus(reservation)}</td>
+      <td className="p-2">{getAdminStatus(reservation)}</td>
       <td className="p-2">{sourceChanger(reservation.source)}</td>
       <td className="p-2">{reservation.notes}</td>
     </tr>

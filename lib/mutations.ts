@@ -251,7 +251,7 @@ export const editUser = async (userId: string, formData: FormData) => {
     const params = [...updates.map((update) => update.value), userId];
 
     await client.query(query, params);
-    revalidatePath("/rezerwacje");
+    revalidatePath(`/rezerwacje/panel/${userId}/reservations`);
     return { success: true };
   } catch (error) {
     console.error("Błąd podczas aktualizacji użytkownika:", error);
