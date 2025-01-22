@@ -11,7 +11,7 @@ export default function CustomerPendingReservations({
       <h3 className="uppercase text-xl font-medium text-bronzelog">
         Twoje nadchodzące rezerwacje
       </h3>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 overflow-x-auto">
         <ReservationHeader action={true} />
         {userReservations.map((reservation) => (
           <ReservationRow

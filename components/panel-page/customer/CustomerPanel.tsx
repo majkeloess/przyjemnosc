@@ -17,9 +17,9 @@ export default async function CustomerPanel({
 
   return (
     <div className="flex flex-col gap-4 mx-auto w-full px-4 min-h-[80dvh] mt-4  xl:px-48">
-      <div className="flex justify-between items-center uppercase text-2xl font-medium">
+      <div className="flex justify-between items-center uppercase text-2xl font-medium sm:flex-row flex-col gap-4">
         <div className="flex-1" />
-        <h2 className="flex-1 text-center text-4xl">
+        <h2 className="flex-1 text-center text-2xl sm:text-4xl">
           Witaj, {userData.username}
         </h2>
         <div className="flex justify-end gap-4 flex-1">

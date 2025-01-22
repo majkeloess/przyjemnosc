@@ -6,7 +6,7 @@ export const RestaurantMapButton = () => {
   const [isMapOpen, setIsMapOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setIsMapOpen(true)} text="Plan restauracji" />
+      <Button onClick={() => setIsMapOpen(true)} text="Plan" />
       {isMapOpen && (
         <MapModal isOpen={isMapOpen} onClose={() => setIsMapOpen(false)} />
       )}
