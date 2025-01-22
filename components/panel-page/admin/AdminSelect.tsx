@@ -24,9 +24,9 @@ const AdminSelectButton = ({
   const fullPath = `/rezerwacje/panel/${userId}/${path}`;
 
   return (
-    <Link href={fullPath}>
+    <Link href={fullPath} className="flex justify-center whitespace-nowrap">
       <button
-        className={`text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full ${
+        className={`text-bronzelog border-[2px] border-bronzelog px-6 py-2 rounded-full text-sm ${
           pathname === fullPath ? "bg-bronzelog text-white" : ""
         }`}
       >
@@ -38,7 +38,7 @@ const AdminSelectButton = ({
 
 const AdminSelectButtonArea = ({ userId }: { userId: string }) => {
   return (
-    <section className="flex flex-row gap-4 flex-wrap justify-center">
+    <section className="flex flex-row flex-wrap justify-center gap-2 items-center w-full mx-auto">
       {AdminPanelChoiceList.map((choice) => (
         <AdminSelectButton
           key={choice.path}
@@ -52,13 +52,7 @@ const AdminSelectButtonArea = ({ userId }: { userId: string }) => {
 };
 
 const AdminSelect = ({ userId }: { userId: string }) => {
-  return (
-    <div className="flex flex-col gap-4 justify-center w-full">
-      <div className="flex flex-row justify-center">
-        <AdminSelectButtonArea userId={userId} />
-      </div>
-    </div>
-  );
+  return <AdminSelectButtonArea userId={userId} />;
 };
 
 export default AdminSelect;

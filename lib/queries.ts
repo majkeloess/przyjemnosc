@@ -98,7 +98,7 @@ type FilterParams = {
 
 export const getReservationsExtended = async ({
   page = 1,
-  pageSize = 20,
+  pageSize = 15,
   username = "",
   status = "",
   source = "",
@@ -141,7 +141,6 @@ export const getReservationsExtended = async ({
       ? `WHERE ${whereConditions.join(" AND ")}`
       : "";
 
-    // Get total count
     const countQuery = `
       SELECT COUNT(DISTINCT r.id)
       FROM restaurant.reservations r

@@ -1,24 +1,22 @@
+import AdminNav from "@/components/panel-page/admin/AdminNav";
 import AdminReservationTable from "@/components/panel-page/admin/AdminReservationTable";
-import LeftArrow from "@/components/svg/LeftArrow";
 import { getReservationsExtended, getTableCapacity } from "@/lib/queries";
-import Link from "next/link";
-export default async function AdminReservationsPage() {
+
+export default async function AdminReservationsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
   const { reservations, total } = await getReservationsExtended({
     page: 1,
-    pageSize: 20,
+    pageSize: 15,
   });
   const capacities = await getTableCapacity();
 
   return (
     <div className="flex flex-col gap-4 mx-auto w-full px-4 min-h-[80dvh] mt-4 mb-12">
-      <div className="flex items-center justify-center gap-4">
-        <h1 className="text-2xl font-medium uppercase text-center">
-          Rezerwacje
-        </h1>
-        <Link href="/rezerwacje/panel">
-          <LeftArrow />
-        </Link>
-      </div>
+      <AdminNav userId={id} />
       <AdminReservationTable
         initialReservations={reservations}
         initialTotal={total}

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   const { reservations, total } = await getReservationsExtended({
     page,
-    pageSize: 20,
+    pageSize: 15,
     username,
     status,
     source,

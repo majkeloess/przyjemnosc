@@ -57,7 +57,7 @@ const FilterBar = ({
   }, 300);
 
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex gap-4 mb-4 p-4 bg-white rounded-lg shadow-md">
       <input
         type="text"
         placeholder="Szukaj po username..."
