@@ -1,4 +1,5 @@
 # System zarządzania rezerwacjami dla restauracji "Przyjemność"
+![Projekt bez nazwy](https://github.com/user-attachments/assets/cac18e88-b0c7-4b77-8f57-b0514f122914)
 
 ## Projekt koncepcji i założenia
 
@@ -175,6 +176,9 @@ graph TD
    - created_at (TIMESTAMP)
 
 ### 6. Relacje między encjami
+
+<img width="1280" alt="image" src="https://github.com/user-attachments/assets/2aaf6efe-57f4-43e6-b610-1f427bf820a8" />
+
 
 #### Opis relacji:
 
